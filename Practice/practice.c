@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/11 17:52:29 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/12 20:08:07 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/13 13:54:08 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,159 +433,26 @@
 // 	pthread_mutex_unlock(&mutexwater);
 // }
 
-// int	main(int argc, char **argv)
-// {
-// 	pthread_t	th[THREAD_NUM];
-// 	int			i;
-// 	pthread_mutex_init(&mutexfuel, NULL);
-// 	pthread_mutex_init(&mutexwater, NULL);
-// 	for (i = 0; i < THREAD_NUM; i++)
-// 	{
-// 		if (pthread_create(&th[i], NULL, &routine, NULL) != 0)
-// 			perror("failed to create thread\n");
-// 	}
-// 	for (i = 0; i < THREAD_NUM; i++)
-// 	{
-// 		if (pthread_join(th[i], NULL) != 0)
-// 			perror("failed to join thread\n");
-// 	}
-// 	printf("fuel: :%d\n", fuel);
-// 	printf("water: :%d\n", water);
-// 	pthread_mutex_destroy(&mutexfuel);
-// 	pthread_mutex_destroy(&mutexwater);
-// 	return (0);
-// }
+int	main(int argc, char **argv)
+{
+	pthread_t	th[THREAD_NUM];
+	int			i;
+	for (i = 0; i < THREAD_NUM; i++)
+	{
+		if (pthread_create(&th[i], NULL, &routine, NULL) != 0)
+			perror("failed to create thread\n");
+	}
+	for (i = 0; i < THREAD_NUM; i++)
+	{
+		if (pthread_join(th[i], NULL) != 0)
+			perror("failed to join thread\n")
+	}
+	return (0);
+}
 
-/*--------------semaphores---------------*/
-//semaphores are used to limit access to a server
-
-// #include <pthread.h>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <unistd.h>
-// #include <string.h>
-// #include <semaphore.h>
-
-// #define THREAD_NUM 16
-
-// sem_t semaphore;
-
-// void* routine(void* args) {
-//     printf("(%d) Waiting in the login queue\n", *(int*)args);
-//     sem_wait(&semaphore);
-//     printf("(%d) Logged in\n", *(int*)args);
-//     sleep(rand() % 5 + 1);
-//     printf("(%d) Logged out\n", *(int*)args);
-//     sem_post(&semaphore);
-//     free(args);
-// }
-
-// int main(int argc, char *argv[]) {
-//     pthread_t th[THREAD_NUM];
-//     sem_init(&semaphore, 0, 32);
-//     int i;
-//     for (i = 0; i < THREAD_NUM; i++) {
-//         int* a = malloc(sizeof(int));
-//         *a = i;
-//         if (pthread_create(&th[i], NULL, &routine, a) != 0) {
-//             perror("Failed to create thread");
-//         }
-//     }
-
-//     for (i = 0; i < THREAD_NUM; i++) {
-//         if (pthread_join(th[i], NULL) != 0) {
-//             perror("Failed to join thread");
-//         }
-//     }
-//     sem_destroy(&semaphore);
-//     return 0;
-// }
-
-/*-------producer consumer problem in Multi-threading----------*/
-
-/*
-	1) manage shared memory access
-	2) checking if buffer is full
-	3) checking if buffer is empty
-*/
-
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include <pthread.h>
-// #include <unistd.h>
-// #include <time.h>
-// #include <semaphore.h>
-
-// #define THREAD_NUM 8
-
-// sem_t semEmpty;
-// sem_t semFull;
-
-// pthread_mutex_t mutexBuffer;
-
-// int buffer[10];
-// int count = 0;
-
-// void* producer(void* args) {
-//     while (1) {
-//         // Produce
-//         int x = rand() % 100;
-//         sleep(1);
-
-//         // Add to the buffer
-//         sem_wait(&semEmpty);
-//         pthread_mutex_lock(&mutexBuffer);
-//         buffer[count] = x;
-//         count++;
-//         pthread_mutex_unlock(&mutexBuffer);
-//         sem_post(&semFull);
-//     }
-// }
-
-// void* consumer(void* args) {
-//     while (1) {
-//         int y;
-
-//         // Remove from the buffer
-//         sem_wait(&semFull);
-//         pthread_mutex_lock(&mutexBuffer);
-//         y = buffer[count - 1];
-//         count--;
-//         pthread_mutex_unlock(&mutexBuffer);
-//         sem_post(&semEmpty);
-
-//         // Consume
-//         printf("Got %d\n", y);
-//         sleep(1);
-//     }
-// }
-
-// int main(int argc, char* argv[]) {
-//     srand(time(NULL));
-//     pthread_t th[THREAD_NUM];
-//     pthread_mutex_init(&mutexBuffer, NULL);
-//     sem_init(&semEmpty, 0, 10);
-//     sem_init(&semFull, 0, 0);
-//     int i;
-//     for (i = 0; i < THREAD_NUM; i++) {
-//         if (i > 0) {
-//             if (pthread_create(&th[i], NULL, &producer, NULL) != 0) {
-//                 perror("Failed to create thread");
-//             }
-//         } else {
-//             if (pthread_create(&th[i], NULL, &consumer, NULL) != 0) {
-//                 perror("Failed to create thread");
-//             }
-//         }
-//     }
-//     for (i = 0; i < THREAD_NUM; i++) {
-//         if (pthread_join(th[i], NULL) != 0) {
-//             perror("Failed to join thread");
-//         }
-//     }
-//     sem_destroy(&semEmpty);
-//     sem_destroy(&semFull);
-//     pthread_mutex_destroy(&mutexBuffer);
-//     return 0;
-// }
+//lock and unlock everytime you you print a message
+//struct for timing
+//mutex locks part of the function that no other threads can use it
+//one philo get's one fork so he dies thats oke
+//sleeping is usleep as many seconds as specified
+//gettimeofday function to keep up how long program takes

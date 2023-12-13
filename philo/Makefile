@@ -6,13 +6,13 @@
 #    By: dreijans <dreijans@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/12/12 21:01:52 by dreijans      #+#    #+#                  #
-#    Updated: 2023/12/12 21:20:04 by dreijans      ########   odam.nl          #
+#    Updated: 2023/12/13 06:48:53 by djoyke        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=thread
 OBJ			= $(addprefix $(OBJDIR)/, $(notdir $(SRC:.c=.o)))
 OBJDIR		= obj
 SRC			= \
@@ -33,7 +33,7 @@ BLACK		:= \033[1;90m
 all:	$(NAME)
 
 $(NAME): $(OBJ)
-		$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBS)
+		$(CC) $(OBJ) -o $(NAME) $(LIBS)
 		@ echo "${PURPLE} ---> Made!${DONE}"
 
 $(OBJDIR)/%.o: %.c
@@ -43,9 +43,13 @@ $(OBJDIR)/%.o: %.c
 $(OBJDIR)/%.o:
 		@mkdir -p $(OBJDIR)
 		$(CC) $(CFLAGS) -c -o $@ $^
-
+		
 run:	$(NAME)
 	@ ./$(NAME)
+
+flags:
+	$(NAME) $(CFLAGS) 
+	@ ./$(NAME) with flags
 
 norm:
 	@ norminette
