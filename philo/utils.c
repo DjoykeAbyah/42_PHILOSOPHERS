@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/13 17:47:01 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/13 17:56:29 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,20 @@ long int	ft_atoi(const char *str)
 		i++;
 	}
 	return (number * sign);
+}
+
+t_philo *init_struct_philo(int argc, char **argv)
+{
+	t_philo *philo;
+
+	philo = (t_philo *)malloc(sizeof(t_philo));
+	if (!philo)
+		perror("malloc");
+	philo->philo_input_count = ft_atoi(argv[1]);//needs to compare or be number_of_philosopers
+	philo->time_to_die = ft_atoi(argv[2]);
+	philo->time_to_eat = ft_atoi(argv[3]);
+	philo->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		philo->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+	return (philo);
 }

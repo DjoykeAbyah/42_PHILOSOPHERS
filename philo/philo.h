@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/13 17:53:50 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/13 18:52:08 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 typedef struct s_philo
 {
 	int					philo_input_count;
-	// pthread_t			number_of_philosophers[6];//200
-	pthread_mutex_t		forks[6];//200
-	pthread_t			death_checker;
+	pthread_t			number_of_philosophers[6];//200
+	pthread_mutex_t		forks[6];//200 (-1 for left and % id/or number for right)
+	//what is this		death_checker;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
@@ -35,8 +35,11 @@ typedef struct s_philo
 
 typedef struct s_philo_data
 {
-	pthread_t			number_of_philosophers[6];//200
-	// int					number_eat;
+	//id
+	//left fork
+	//right fork
+	//times eaten
+	//time of death
 }				t_philo_data;
 
 t_philo 		*init_struct_philo(int argc, char **argv);
@@ -46,3 +49,5 @@ long int		ft_atoi(const char *str);
 #endif
 
 //data struct to compare philo data with.
+//what do i need from where
+//what do the philosophers need
