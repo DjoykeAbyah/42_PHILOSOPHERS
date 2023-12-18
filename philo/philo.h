@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/18 17:06:57 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/18 19:14:04 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_data
 {
 	int					philo_count;
 	pthread_mutex_t		*fork_array;
-	pthread_t			*philo_array;
+	t_philo_data		*philosopher;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
@@ -39,6 +39,7 @@ typedef struct s_philo_data
 	pthread_mutex_t		right_fork;//id -1;
 	int					times_eaten;
 	int					time_of_death;
+	t_data				data;
 }				t_philo_data;
 
 void 			init_struct_philo(t_data *data, int argc, char **argv);

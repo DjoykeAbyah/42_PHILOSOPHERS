@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/18 17:59:12 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/18 19:08:02 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ void *routine()
 	//message pick up left fork----> die?
 	//lock right fork
 	//message pick up right fork---> die?
-	//did you die?
 	//message eating---> die?
 	//unlock
 	//message sleep---> die?
 	//usleep
-	//did you die?
 }
 
 int main(int argc, char **argv)

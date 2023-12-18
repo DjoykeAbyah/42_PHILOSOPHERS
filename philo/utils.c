@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/18 17:01:07 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/18 19:17:02 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void init_struct_philo( t_data *data, int argc, char **argv)
 	data->philo_count = ft_atoi(argv[1]);
 	while (i <= data->philo_count)
 	{
+		//mutex create silly not with int
 		data->fork_array = i;
 		i++;
 	}
@@ -60,7 +61,16 @@ void init_struct_philo( t_data *data, int argc, char **argv)
 		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 }
 
-void assign_forks(t_philo_data *philo, t_data *data)
+void init_philo( t_data *data, int argc, char **argv)
 {
-	
+	int		i;
+
+	i = 0;
+	data->philosopher = malloc(sizeof(t_philo_data) * data->philo_count + 1);
+	//if null meh
+	//return something
+	//while data->philospher[i] != data_philo_count
+		//philo_data_left fork is fork_array[i] 
+		//right fork is philo[i] - 1
+		//i++;
 }
