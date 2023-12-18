@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/13 18:52:08 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/18 17:06:57 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,28 @@
 #include <time.h>
 #include <string.h>
 
-typedef struct s_philo
+typedef struct s_data
 {
-	int					philo_input_count;
-	pthread_t			number_of_philosophers[6];//200
-	pthread_mutex_t		forks[6];//200 (-1 for left and % id/or number for right)
-	//what is this		death_checker;
+	int					philo_count;
+	pthread_mutex_t		*fork_array;
+	pthread_t			*philo_array;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					number_of_times_each_philosopher_must_eat;
-}			t_philo;
+}			t_data;
 
 
 typedef struct s_philo_data
 {
-	//id
-	//left fork
-	//right fork
-	//times eaten
-	//time of death
+	int					*philo_id;
+	pthread_mutex_t		left_fork;//id;
+	pthread_mutex_t		right_fork;//id -1;
+	int					times_eaten;
+	int					time_of_death;
 }				t_philo_data;
 
-t_philo 		*init_struct_philo(int argc, char **argv);
+void 			init_struct_philo(t_data *data, int argc, char **argv);
 static	int		ft_iswhitespace(char c);
 long int		ft_atoi(const char *str);
 

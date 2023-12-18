@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/13 17:56:29 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/18 17:01:07 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,25 @@ long int	ft_atoi(const char *str)
 	return (number * sign);
 }
 
-t_philo *init_struct_philo(int argc, char **argv)
+void init_struct_philo( t_data *data, int argc, char **argv)
 {
-	t_philo *philo;
+	int		i;
 
-	philo = (t_philo *)malloc(sizeof(t_philo));
-	if (!philo)
-		perror("malloc");
-	philo->philo_input_count = ft_atoi(argv[1]);//needs to compare or be number_of_philosopers
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_eat = ft_atoi(argv[3]);
-	philo->time_to_sleep = ft_atoi(argv[4]);
+	i = 0;
+	data->philo_count = ft_atoi(argv[1]);
+	while (i <= data->philo_count)
+	{
+		data->fork_array = i;
+		i++;
+	}
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		philo->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
-	return (philo);
+		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+}
+
+void assign_forks(t_philo_data *philo, t_data *data)
+{
+	
 }
