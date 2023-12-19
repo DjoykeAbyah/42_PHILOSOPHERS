@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 18:47:12 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 18:54:45 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ long int	ft_atoi(const char *str)
 */
 void init_data_struct(t_data *data, int argc, char **argv)
 {
-	int				i;
+	int	i;
 
 	i = 0;
 	data->philo_count = ft_atoi(argv[1]);
@@ -100,7 +100,7 @@ void init_data_struct(t_data *data, int argc, char **argv)
 */
 void init_philo(t_data *data)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	data->philo = malloc(sizeof(t_philo) * data->philo_count);

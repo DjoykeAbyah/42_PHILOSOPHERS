@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 18:48:06 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 18:51:56 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*routine(void *philo)
 
 	//cast terug naar t_philo;
 	philosopher = (t_philo *)philo;
-	thinking(philo);
+	thinking(philosopher);
 	//lock left fork
 	pthread_mutex_lock(philosopher->left_fork);
 	//message pick up left fork----> die?
@@ -50,6 +50,6 @@ void	*routine(void *philo)
 	pthread_mutex_unlock(philosopher->left_fork);
 	pthread_mutex_unlock(philosopher->right_fork);
 	//unlock
-	sleeping(philo);
-	return (NULL);
+	sleeping(philosopher);
+	return (philosopher);
 }

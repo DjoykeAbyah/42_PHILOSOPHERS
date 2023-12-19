@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 18:39:11 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 18:50:51 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ void 			init_data_struct(t_data *data, int argc, char **argv);
 void 			init_philo(t_data *data);
 static	int		ft_iswhitespace(char c);
 long int		ft_atoi(const char *str);
-void 			*routine();
+void 			*routine(void *philo);
 
 #endif
