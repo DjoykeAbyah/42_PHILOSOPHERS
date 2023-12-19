@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 18:53:50 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 19:53:16 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ int main(int argc, char **argv)
 	int				j;
 
 	i = 0;
+	j = 0;
 	if (argc == 5 || argc == 6)
 	{
 		init_data_struct(&data, argc, argv);
 		init_philo(&data);
+		//philosoper 0 is niet gewenst maak het 1
 		while (i < data.philo_count)// i = philo_array
 		{
 			if (pthread_create(&data.philo[i].t_id, NULL, &routine, (void *)&data.philo[i]) != 0)

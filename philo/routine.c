@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 18:51:56 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 19:45:49 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static void thinking(t_philo *philo)
 {
 	//message think
-	printf("%d is thinking\n", philo->p_id);
+	printf("%d is thinking\n", (philo->p_id + 1));
 	//--->die?
 }
 
 static void sleeping(t_philo *philo)
 {
 	//message sleep---> die?
-	printf("%d is sleeping\n", philo->p_id);
+	printf("%d is sleeping\n", (philo->p_id + 1));
 	//usleep
 }
 
@@ -36,20 +36,23 @@ void	*routine(void *philo)
 
 	//cast terug naar t_philo;
 	philosopher = (t_philo *)philo;
-	thinking(philosopher);
-	//lock left fork
-	pthread_mutex_lock(philosopher->left_fork);
-	//message pick up left fork----> die?
-	printf("%d has picked up left fork\n", philosopher->p_id);
-	//lock right fork
-	pthread_mutex_lock(philosopher->right_fork);
-	//message pick up right fork---> die?
-	printf("%d has picked up right fork\n", philosopher->p_id);
-	printf("%d is eating\n", philosopher->p_id);
-	//message eating---> die?
-	pthread_mutex_unlock(philosopher->left_fork);
-	pthread_mutex_unlock(philosopher->right_fork);
-	//unlock
-	sleeping(philosopher);
+	while (1)
+	{
+		thinking(philosopher);
+		//lock left fork
+		pthread_mutex_lock(philosopher->left_fork);
+		//message pick up left fork----> die?
+		printf("%d has picked up left fork\n", (philosopher->p_id + 1));
+		//lock right fork
+		pthread_mutex_lock(philosopher->right_fork);
+		//message pick up right fork---> die?
+		printf("%d has picked up right fork\n", (philosopher->p_id + 1));
+		printf("%d is eating\n", (philosopher->p_id + 1));
+		//message eating---> die?
+		pthread_mutex_unlock(philosopher->left_fork);
+		pthread_mutex_unlock(philosopher->right_fork);
+		//unlock
+		sleeping(philosopher);
+	}
 	return (philosopher);
 }

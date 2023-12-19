@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 18:54:45 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 19:52:23 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,15 @@ void init_philo(t_data *data)
 	data->philo = malloc(sizeof(t_philo) * data->philo_count);
 	if (data->philo == NULL)
 		return ; //free error??
-	i = 0;
-	data->philo[0].right_fork = &data->fork_array[data->philo_count];
+	if (i == 0)
+	{
+		data->philo[0].p_id = i;
+		data->philo[0].right_fork = &data->fork_array[data->philo_count];
+		data->philo[0].left_fork = &data->fork_array[0];
+		data->philo[0].times_eaten = 0;//needs to be -1?
+		data->philo[0].time_of_death = 0;//needs to be -1?
+		i++;
+	}
 	while (i < data->philo_count)
 	{
 		data->philo[i].p_id = i;
