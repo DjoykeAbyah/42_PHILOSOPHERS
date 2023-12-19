@@ -6,11 +6,18 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 15:38:27 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 17:08:08 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
 
 /**
  * @param c character to be checked
@@ -57,18 +64,19 @@ long int	ft_atoi(const char *str)
  * @param argv command line argument strings
  * @brief initializing data struct and filling mutex array.
 */
-void init_struct_philo(t_data *data, int argc, char **argv)
+void init_data_struct(t_data *data, int argc, char **argv)
 {
 	int				i;
-	pthread_mutex_t mutex;
 
 	i = 0;
 	data->philo_count = ft_atoi(argv[1]);
-	while (i <= data->philo_count)
+	data->fork_array = malloc(sizeof(pthread_mutex_t) * data->philo_count);
+	if (data->fork_array == NULL)
+		return ;//return iets anders/free?
+	while (i < data->philo_count)
 	{
-		data->fork_array = pthread_mutex_init(&mutex, NULL);
+		pthread_mutex_init(&data->fork_array[i], NULL);
 		i++;
-		data->fork_array++;
 	}
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -84,18 +92,27 @@ void init_struct_philo(t_data *data, int argc, char **argv)
  * @param argv command line argument strings
  * @brief initializing t_philo_data struct
 */
-void init_philo( t_data *data, int argc, char **argv)
+void init_philo(t_data *data)
 {
 	int		i;
 
 	i = 0;
-	data->philosopher = malloc(sizeof(t_philo_data) * data->philo_count + 1);
-	//if null meh
-	//return something
-	//while data->philospher[i] != data_philo_count
-		//philo_data_left fork is fork_array[i] 
-		//right fork is philo[i] - 1
-		//i++;
+	data->philo = malloc(sizeof(t_philo) * data->philo_count);
+	if (data->philo == NULL)
+		return ; //free error??
+	i = 0;
+	while (i < data->philo_count)
+	{
+		data->philo[i].p_id = i;
+		//if id % 2 != 0;
+		//left is right, right is left :) muhahhaha 
+		data->philo[i].left_fork = &data->fork_array[i];
+		//tenzij philo 0 = right fork = philo count
+		data->philo[i].right_fork = &data->fork_array[i - 1];
+		data->philo[i].times_eaten = 0;//needs to be -1?
+		data->philo[i].time_of_death = 0;//needs to be -1?
+		i++;
+	}
 }
 
 /**
@@ -104,8 +121,9 @@ void init_philo( t_data *data, int argc, char **argv)
  * @param 
  * @brief routine of the philosophers
 */
-void *routine()
+void *routine(void *philo)
 {
+	//cast terug naar t_philo;
 	//message think--->die?
 	//lock left fork
 	//message pick up left fork----> die?
@@ -115,4 +133,5 @@ void *routine()
 	//unlock
 	//message sleep---> die?
 	//usleep
+	return (NULL);
 }

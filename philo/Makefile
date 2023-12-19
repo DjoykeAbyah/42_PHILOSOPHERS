@@ -6,7 +6,7 @@
 #    By: dreijans <dreijans@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/12/12 21:01:52 by dreijans      #+#    #+#                  #
-#    Updated: 2023/12/13 15:41:29 by dreijans      ########   odam.nl          #
+#    Updated: 2023/12/19 17:02:20 by dreijans      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ LDFLAGS		= 	-g -fsanitize=address
 THFLAGS		=	-g -fsanitize=thread
 OBJ			= 	$(addprefix $(OBJDIR)/, $(notdir $(SRC:.c=.o)))
 OBJDIR		= 	obj
-SRC			= 	main.c 
+SRC			= 	main.c \
+				utils.c \
 			
 ## COLOURS ##
 DONE		:= \033[0m

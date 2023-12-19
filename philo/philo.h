@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 15:38:41 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 17:07:08 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@
 #include <time.h>
 #include <string.h>
 
+typedef struct s_philo t_philo;
+
 /**
  * @param philo_count amount of philo's passed from command line
  * @param fork_array array containing all mutexes
- * @param philosopher t_philo_data philospher containing everything
- * unique to that thread
- * @param time_to_die time allowed before philo dies, passed form 
- * commandline.
- * @param time_to_eat time allowed to eat before philo dies, passed from
- * commandline
+ * @param philosopher t_philo philospher containing unique to philo data
+ * @param time_to_die time allowed before philo dies
+ * @param time_to_eat time allowed to eat before philo dies
  * @param time_to_sleep time philo is allowed to sleep
  * @param number_of_times_each_philosopher_must_eat number of times
  * each philo has to eat.
@@ -38,7 +37,7 @@ typedef struct s_data
 {
 	int					philo_count;
 	pthread_mutex_t		*fork_array;
-	t_philo_data		*philosopher;
+	t_philo				*philo;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
@@ -55,19 +54,21 @@ typedef struct s_data
  * @brief struct containing unique data for each philo(thread)
  * program
 */
-typedef struct s_philo_data
+struct s_philo
 {
-	int					*philo_id;
-	pthread_mutex_t		left_fork;//id;
-	pthread_mutex_t		right_fork;//id -1;
+	pthread_t			t_id;
+	int					p_id;
+	pthread_mutex_t		*left_fork;//id; is pointer zodat ik zelf kan assignen niet overschrijven
+	pthread_mutex_t		*right_fork;//id -1; same
 	int					times_eaten;
 	int					time_of_death;
 	t_data				data;
-}				t_philo_data;
+};
 
-void 			init_struct_philo(t_data *data, int argc, char **argv);
+void 			init_data_struct(t_data *data, int argc, char **argv);
+void 			init_philo(t_data *data);
 static	int		ft_iswhitespace(char c);
 long int		ft_atoi(const char *str);
-void 			*routine()
+void 			*routine();
 
 #endif
