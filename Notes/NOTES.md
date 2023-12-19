@@ -444,3 +444,11 @@ mutex locks part of the function that no other threads can use it
 one philo get's one fork so he dies thats oke
 sleeping is usleep as many seconds as specified
 gettimeofday function to keep up how long program takes
+
+
+
+-----------------TODO-----------------
+
+1) data struct to compare philo data with.
+2) what do i need from where
+3) what do the philosophers need

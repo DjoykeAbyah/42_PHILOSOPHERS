@@ -6,17 +6,25 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/18 19:17:02 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 15:38:27 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @param c character to be checked
+ * @brief checks characters for whitespaces
+*/
 static	int	ft_iswhitespace(char c)
 {
 	return (c == ' ' || ((c >= 9 && c <= 13)));
 }
 
+/**
+ * @param str string to be converted to integer
+ * @brief converting numeric characters to integers
+*/
 long int	ft_atoi(const char *str)
 {
 	long	i;
@@ -42,17 +50,25 @@ long int	ft_atoi(const char *str)
 	return (number * sign);
 }
 
-void init_struct_philo( t_data *data, int argc, char **argv)
+/**
+ * @param data data struct containing all general data 
+ * for the program
+ * @param argc command line argument count
+ * @param argv command line argument strings
+ * @brief initializing data struct and filling mutex array.
+*/
+void init_struct_philo(t_data *data, int argc, char **argv)
 {
-	int		i;
+	int				i;
+	pthread_mutex_t mutex;
 
 	i = 0;
 	data->philo_count = ft_atoi(argv[1]);
 	while (i <= data->philo_count)
 	{
-		//mutex create silly not with int
-		data->fork_array = i;
+		data->fork_array = pthread_mutex_init(&mutex, NULL);
 		i++;
+		data->fork_array++;
 	}
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -61,6 +77,13 @@ void init_struct_philo( t_data *data, int argc, char **argv)
 		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 }
 
+/**
+ * @param data data struct containing all general data 
+ * for the program
+ * @param argc command line argument count
+ * @param argv command line argument strings
+ * @brief initializing t_philo_data struct
+*/
 void init_philo( t_data *data, int argc, char **argv)
 {
 	int		i;
@@ -73,4 +96,23 @@ void init_philo( t_data *data, int argc, char **argv)
 		//philo_data_left fork is fork_array[i] 
 		//right fork is philo[i] - 1
 		//i++;
+}
+
+/**
+ * @param 
+ * @param 
+ * @param 
+ * @brief routine of the philosophers
+*/
+void *routine()
+{
+	//message think--->die?
+	//lock left fork
+	//message pick up left fork----> die?
+	//lock right fork
+	//message pick up right fork---> die?
+	//message eating---> die?
+	//unlock
+	//message sleep---> die?
+	//usleep
 }

@@ -6,24 +6,11 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/18 19:08:02 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 15:37:52 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void *routine()
-{
-	//message think--->die?
-	//lock left fork
-	//message pick up left fork----> die?
-	//lock right fork
-	//message pick up right fork---> die?
-	//message eating---> die?
-	//unlock
-	//message sleep---> die?
-	//usleep
-}
 
 int main(int argc, char **argv)
 {
