@@ -6,13 +6,17 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 17:08:08 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 18:47:12 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_isdigit(int c)
+/**
+ * @param c int to be checked
+ * @brief checks characters for numeric characters
+*/
+static	int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -63,6 +67,7 @@ long int	ft_atoi(const char *str)
  * @param argc command line argument count
  * @param argv command line argument strings
  * @brief initializing data struct and filling mutex array.
+ * @todo remove comments, check
 */
 void init_data_struct(t_data *data, int argc, char **argv)
 {
@@ -91,6 +96,7 @@ void init_data_struct(t_data *data, int argc, char **argv)
  * @param argc command line argument count
  * @param argv command line argument strings
  * @brief initializing t_philo_data struct
+ * @todo remove comments, check return values
 */
 void init_philo(t_data *data)
 {
@@ -101,37 +107,22 @@ void init_philo(t_data *data)
 	if (data->philo == NULL)
 		return ; //free error??
 	i = 0;
+	data->philo[0].right_fork = &data->fork_array[data->philo_count];
 	while (i < data->philo_count)
 	{
 		data->philo[i].p_id = i;
-		//if id % 2 != 0;
-		//left is right, right is left :) muhahhaha 
-		data->philo[i].left_fork = &data->fork_array[i];
-		//tenzij philo 0 = right fork = philo count
-		data->philo[i].right_fork = &data->fork_array[i - 1];
+		if (i % 2 != 0)
+		{
+			data->philo[i].right_fork = &data->fork_array[i];
+			data->philo[i].left_fork = &data->fork_array[i - 1];
+		}
+		else
+		{
+			data->philo[i].left_fork = &data->fork_array[i];
+			data->philo[i].right_fork = &data->fork_array[i - 1];
+		}
 		data->philo[i].times_eaten = 0;//needs to be -1?
 		data->philo[i].time_of_death = 0;//needs to be -1?
 		i++;
 	}
-}
-
-/**
- * @param 
- * @param 
- * @param 
- * @brief routine of the philosophers
-*/
-void *routine(void *philo)
-{
-	//cast terug naar t_philo;
-	//message think--->die?
-	//lock left fork
-	//message pick up left fork----> die?
-	//lock right fork
-	//message pick up right fork---> die?
-	//message eating---> die?
-	//unlock
-	//message sleep---> die?
-	//usleep
-	return (NULL);
 }

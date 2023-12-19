@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 17:08:31 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 18:06:26 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 		{
 			if (pthread_create(&data.philo[i].t_id, NULL, &routine, (void *)&data.philo[i]) != 0)
 			{
-				while (j < i)// use the for join for mutex for lock yey for wronk yes
+				while (j < i)
 				{
 					if (pthread_join(data.philo[j].t_id, NULL) != 0)
 						perror("Error at joining thread\n");
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 			i++;
 		}
 		i = 0;
-		while (i < data.philo_count)// use the for join for mutex for lock yey for wronk yes
+		while (i < data.philo_count)
 		{
 			if (pthread_join(data.philo[i].t_id, NULL) != 0)
 				perror("Error at joining thread\n");
