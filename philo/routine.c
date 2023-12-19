@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 19:45:49 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/19 20:08:48 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void sleeping(t_philo *philo)
 {
 	//message sleep---> die?
 	printf("%d is sleeping\n", (philo->p_id + 1));
+	usleep(philo->data.time_to_sleep);
 	//usleep
 }
 
