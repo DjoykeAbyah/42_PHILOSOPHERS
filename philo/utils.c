@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/20 19:00:56 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/20 20:00:42 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ long int	ft_atoi(const char *str)
 	return (number * sign);
 }
 
+/**
+ * @param b variable to be converted to unsigned char
+ * @param c	integer to be converted to unsigned char
+ * @param len lenght of variable to be set
+ * @brief setting the memory of x number variables
+*/
 static void	*ft_memset(void *b, int c, size_t len)
 {
 	unsigned char	*charb;
@@ -77,11 +83,21 @@ static void	*ft_memset(void *b, int c, size_t len)
 	return (b);
 }
 
+/**
+ * @param s variable to be set to '\0'
+ * @param n	lenght of memory needed to be set to '\0'
+ * @brief setting the memory of x number variables to '\0'
+*/
 void	ft_bzero(void *s, size_t n)
 {
 	ft_memset(s, '\0', n);
 }
 
+/**
+ * @param count size of the variable(s) to be malloced
+ * @param size amount of the variable(s) to be malloced
+ * @brief allocating memory on the heap and seting it to '\0'
+*/
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*aloc_mem;

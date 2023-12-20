@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/20 18:58:04 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/20 19:16:29 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef struct s_philo
 {
 	pthread_t			t_id;
 	int					p_id;
-	pthread_mutex_t		*left_fork;//id; is pointer zodat ik zelf kan assignen niet overschrijven
-	pthread_mutex_t		*right_fork;//id -1; same
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
 	int					times_eaten;
 	int					time_of_death;
 	t_data				*data;

@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/20 19:02:06 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/20 20:17:39 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 static void thinking(t_philo *philo)
 {
 	//message think
-	printf("%d is thinking\n", (philo->p_id + 1));
+	int long 		milliseconds;
+	struct timeval 	current_time;
+	int	long		start;
+	
+	//message sleep---> die?
+	start = get_current_time();
+	milliseconds = start - philo->data->start_time;
+	printf("%09ld %d is thinking\n", milliseconds, (philo->p_id + 1));
 	//--->die?
 }
 
@@ -31,6 +38,18 @@ static void sleeping(t_philo *philo)
 	printf("%09ld %d is sleeping\n", milliseconds, (philo->p_id + 1));
 	while ((philo->data->time_to_sleep + start) < get_current_time())
 		usleep(250);
+}
+
+static void eating(t_philo *philo)
+{
+	int long 		milliseconds;
+	struct timeval 	current_time;
+	int	long		start;
+	
+	//message sleep---> die?
+	start = get_current_time();
+	milliseconds = start - philo->data->start_time;
+	printf("%09ld %d is eating\n", milliseconds, (philo->p_id + 1));
 }
 
 int long	get_current_time()
@@ -57,15 +76,15 @@ void	*routine(void *philo)
 	{
 		thinking(philosopher);
 		pthread_mutex_lock(philosopher->left_fork);
-		//message pick up left fork----> die?
 		printf("%d has picked up left fork\n", (philosopher->p_id + 1));
+		//message pick up left fork----> die?
 		pthread_mutex_lock(philosopher->right_fork);
-		//message pick up right fork---> die?
 		printf("%d has picked up right fork\n", (philosopher->p_id + 1));
-		printf("%d is eating\n", (philosopher->p_id + 1));
+		//message pick up right fork---> die?
+		eating(philosopher);
 		//message eating---> die?
-		pthread_mutex_unlock(philosopher->left_fork);
 		pthread_mutex_unlock(philosopher->right_fork);
+		pthread_mutex_unlock(philosopher->left_fork);
 		sleeping(philosopher);
 	}
 	return (philosopher);
