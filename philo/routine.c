@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 20:08:48 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/20 19:02:06 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,27 @@ static void thinking(t_philo *philo)
 
 static void sleeping(t_philo *philo)
 {
+	int long 		milliseconds;
+	struct timeval 	current_time;
+	int	long		start;
+	
 	//message sleep---> die?
-	printf("%d is sleeping\n", (philo->p_id + 1));
-	usleep(philo->data.time_to_sleep);
-	//usleep
+	start = get_current_time();
+	milliseconds = start - philo->data->start_time;
+	printf("%09ld %d is sleeping\n", milliseconds, (philo->p_id + 1));
+	while ((philo->data->time_to_sleep + start) < get_current_time())
+		usleep(250);
+}
+
+int long	get_current_time()
+{
+	int long 	time_milli;
+	struct 		timeval 	current_time;
+	
+	if (gettimeofday(&current_time, NULL) == -1)
+		perror("gettimeofday error");
+	time_milli = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
+	return (time_milli);
 }
 
 /**
@@ -35,16 +52,13 @@ void	*routine(void *philo)
 {
 	t_philo *philosopher;
 
-	//cast terug naar t_philo;
 	philosopher = (t_philo *)philo;
 	while (1)
 	{
 		thinking(philosopher);
-		//lock left fork
 		pthread_mutex_lock(philosopher->left_fork);
 		//message pick up left fork----> die?
 		printf("%d has picked up left fork\n", (philosopher->p_id + 1));
-		//lock right fork
 		pthread_mutex_lock(philosopher->right_fork);
 		//message pick up right fork---> die?
 		printf("%d has picked up right fork\n", (philosopher->p_id + 1));
@@ -52,7 +66,6 @@ void	*routine(void *philo)
 		//message eating---> die?
 		pthread_mutex_unlock(philosopher->left_fork);
 		pthread_mutex_unlock(philosopher->right_fork);
-		//unlock
 		sleeping(philosopher);
 	}
 	return (philosopher);

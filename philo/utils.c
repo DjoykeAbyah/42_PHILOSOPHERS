@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 19:52:23 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/20 19:00:56 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,40 @@ long int	ft_atoi(const char *str)
 	return (number * sign);
 }
 
+static void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char	*charb;
+	size_t			i;
+
+	i = 0;
+	charb = b;
+	while (i < len)
+	{
+		*charb = (unsigned char)c;
+		charb++;
+		i++;
+	}
+	return (b);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, '\0', n);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*aloc_mem;
+
+	aloc_mem = malloc(count * size);
+	if (aloc_mem == NULL)
+	{
+		return (NULL);
+	}
+	ft_bzero(aloc_mem, (count * size));
+	return (aloc_mem);
+}
+
 /**
  * @param data data struct containing all general data 
  * for the program
@@ -69,15 +103,20 @@ long int	ft_atoi(const char *str)
  * @brief initializing data struct and filling mutex array.
  * @todo remove comments, check
 */
-void init_data_struct(t_data *data, int argc, char **argv)
+// void	init_data_struct(t_data *data, int argc, char **argv)
+t_data	*init_data_struct(t_data *data, int argc, char **argv)
 {
 	int	i;
 
 	i = 0;
+	data = ft_calloc(sizeof(t_data), 1);
+	if (data == NULL)
+		perror("calloc went wrong");
+	data->start_time = get_current_time();
 	data->philo_count = ft_atoi(argv[1]);
 	data->fork_array = malloc(sizeof(pthread_mutex_t) * data->philo_count);
 	if (data->fork_array == NULL)
-		return ;//return iets anders/free?
+		return (NULL);//return iets anders/free?
 	while (i < data->philo_count)
 	{
 		pthread_mutex_init(&data->fork_array[i], NULL);
@@ -88,6 +127,7 @@ void init_data_struct(t_data *data, int argc, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+	return (data);
 }
 
 /**
@@ -98,14 +138,14 @@ void init_data_struct(t_data *data, int argc, char **argv)
  * @brief initializing t_philo_data struct
  * @todo remove comments, check return values
 */
-void init_philo(t_data *data)
+void	init_philo(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	data->philo = malloc(sizeof(t_philo) * data->philo_count);
 	if (data->philo == NULL)
-		return ; //free error??
+		return ;
 	if (i == 0)
 	{
 		data->philo[0].p_id = i;
@@ -113,6 +153,7 @@ void init_philo(t_data *data)
 		data->philo[0].left_fork = &data->fork_array[0];
 		data->philo[0].times_eaten = 0;//needs to be -1?
 		data->philo[0].time_of_death = 0;//needs to be -1?
+		data->philo[0].data = data;
 		i++;
 	}
 	while (i < data->philo_count)
@@ -130,6 +171,7 @@ void init_philo(t_data *data)
 		}
 		data->philo[i].times_eaten = 0;//needs to be -1?
 		data->philo[i].time_of_death = 0;//needs to be -1?
+		data->philo[i].data = data;
 		i++;
 	}
 }

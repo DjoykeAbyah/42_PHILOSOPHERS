@@ -6,19 +6,20 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/19 18:50:51 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/20 18:58:04 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <time.h>
-#include <string.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <time.h>
+# include <string.h>
+# include <sys/time.h>
 
 typedef struct s_philo t_philo;
 
@@ -35,6 +36,7 @@ typedef struct s_philo t_philo;
 */
 typedef struct s_data
 {
+	long int			start_time;
 	int					philo_count;
 	pthread_mutex_t		*fork_array;
 	t_philo				*philo;
@@ -54,7 +56,7 @@ typedef struct s_data
  * @brief struct containing unique data for each philo(thread)
  * program
 */
-struct s_philo
+typedef struct s_philo
 {
 	pthread_t			t_id;
 	int					p_id;
@@ -62,13 +64,14 @@ struct s_philo
 	pthread_mutex_t		*right_fork;//id -1; same
 	int					times_eaten;
 	int					time_of_death;
-	t_data				data;
-};
+	t_data				*data;
+}		t_philo;
 
-void 			init_data_struct(t_data *data, int argc, char **argv);
-void 			init_philo(t_data *data);
+t_data			*init_data_struct(t_data *data, int argc, char **argv);
+void			init_philo(t_data *data);
 static	int		ft_iswhitespace(char c);
 long int		ft_atoi(const char *str);
 void 			*routine(void *philo);
+int long		get_current_time();
 
 #endif

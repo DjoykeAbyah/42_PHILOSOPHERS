@@ -449,6 +449,7 @@ gettimeofday function to keep up how long program takes
 
 -----------------TODO-----------------
 
-1) data struct to compare philo data with.
+1) create timestamp sleep plus death
 2) what do i need from where
 3) what do the philosophers need
+4) kleine sleep om te kijken of usleep al zelfde als time to sleep is met usleep
