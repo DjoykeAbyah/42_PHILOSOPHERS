@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/22 18:33:22 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/22 23:31:53 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@
 int main(int argc, char **argv)
 {
 	t_data			*data;
-	// t_philo			*philo;
 	int 			i;
 	int				j;
 
 	data = NULL;
-	// philo = NULL;
 	i = 0;
 	j = 0;
 	if (argc == 5 || argc == 6)
 	{
-		data = init_data_struct(data, argc, argv);
+		//check input on numeric only
+		init_data_struct(data, argc, argv);
 		init_philo(data);
 		while (i < data->philo_count)// i = philo_array
 		{

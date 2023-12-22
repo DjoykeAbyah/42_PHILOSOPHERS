@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/22 20:15:29 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/22 23:36:44 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,18 @@ typedef struct s_philo t_philo;
 */
 typedef struct s_data
 {
-	long int			start_time;
 	int					philo_count;
-	pthread_mutex_t		*fork_array;
-	t_philo				*philo;
-	pthread_mutex_t		printing_mutex;
-	pthread_mutex_t		monitor_mutex;
-	bool				stop_monitor;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
-	int					number_of_times_each_philosopher_must_eat;
+	int					eat_count;
+	bool				stop_monitor;
+	t_philo				*philo;
+	pthread_mutex_t		*fork_array;
+	pthread_mutex_t		printing;
+	pthread_mutex_t		eating;
+	pthread_mutex_t		monitor;
+	long int			start_time;
 }			t_data;
 
 /**
@@ -64,19 +65,28 @@ typedef struct s_philo
 {
 	pthread_t			t_id;
 	int					p_id;
-	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		*right_fork;
 	int					times_eaten;
 	int					time_of_death;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
 	t_data				*data;
 }		t_philo;
 
-
-t_data			*init_data_struct(t_data *data, int argc, char **argv);
+//init.c
+void			init_data_struct(t_data *data, int argc, char **argv);
 void			init_philo(t_data *data);
-static	int		ft_iswhitespace(char c);
+void			init_data_mutexes(t_data *data);
+void			init_fork_array(t_data *data);
+void			free_fork_array(t_data *data, int i);
+
+//utils.c
+void			*ft_calloc(size_t count, size_t size);
+void			ft_bzero(void *s, size_t n);
+static void		*ft_memset(void *b, int c, size_t len);
 long int		ft_atoi(const char *str);
-void 			*routine(void *philo);
-int long		get_current_time();
+static	int		ft_iswhitespace(char c);
+static	int		ft_isdigit(int c);
+
+// void			*routine(void *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/22 20:16:00 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/22 23:42:01 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ long int	ft_atoi(const char *str)
  * @param len lenght of variable to be set
  * @brief setting the memory of x number variables
 */
-static void	*ft_memset(void *b, int c, size_t len)
+static void *ft_memset(void *b, int c, size_t len)
 {
 	unsigned char	*charb;
 	size_t			i;
@@ -111,79 +111,12 @@ void	*ft_calloc(size_t count, size_t size)
 	return (aloc_mem);
 }
 
-/**
- * @param data data struct containing all general data 
- * for the program
- * @param argc command line argument count
- * @param argv command line argument strings
- * @brief initializing data struct and filling mutex array.
- * @todo remove comments, check
-*/
-// void	init_data_struct(t_data *data, int argc, char **argv)
-t_data	*init_data_struct(t_data *data, int argc, char **argv)
-{
-	int	i;
-
-	i = 0;
-	data = ft_calloc(sizeof(t_data), 1);
-	if (data == NULL)
-		perror("calloc went wrong");
-	data->start_time = get_current_time();
-	data->philo_count = ft_atoi(argv[1]);
-	data->fork_array = malloc(sizeof(pthread_mutex_t) * data->philo_count);
-	if (data->fork_array == NULL)
-		return (NULL);//return iets anders/free?
-	while (i < data->philo_count)
-	{
-		pthread_mutex_init(&data->fork_array[i], NULL);
-		i++;
-	}
-	pthread_mutex_init(&data->printing_mutex, NULL);
-	pthread_mutex_init(&data->monitor_mutex, NULL);
-	data->stop_monitor = false;
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
-	return (data);
-}
-
-/**
- * @param data data struct containing all general data 
- * for the program
- * @param argc command line argument count
- * @param argv command line argument strings
- * @brief initializing t_philo_data struct
- * @todo remove comments, check return values
-*/
-void	init_philo(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->philo = malloc(sizeof(t_philo) * data->philo_count + 1);
-	if (data->philo == NULL)
-		return ;
-	(&data->philo)[data->philo_count] = NULL;
-	if (i == 0)
-	{
-		data->philo[0].p_id = i;
-		data->philo[0].right_fork = &data->fork_array[data->philo_count - 1];
-		data->philo[0].left_fork = &data->fork_array[0];
-		data->philo[0].times_eaten = 0;//needs to be -1?
-		data->philo[0].time_of_death = 0;//needs to be -1?
-		data->philo[0].data = data;
-		i++;
-	}
-	while (i < data->philo_count)
-	{
-		data->philo[i].p_id = i;
-		data->philo[i].left_fork = &data->fork_array[i];
-		data->philo[i].right_fork = &data->fork_array[i - 1];
-		data->philo[i].times_eaten = 0;//needs to be -1?
-		data->philo[i].time_of_death = 0;//needs to be -1?
-		data->philo[i].data = data;
-		i++;
-	}
-}
+// int long	get_current_time()
+// {
+// 	int long 	time_millisec;
+//     int long    current_time;
+    
+//     current_time = get_current_time();
+// 	time_millisec = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
+// 	return (time_milliseconds);
+// }

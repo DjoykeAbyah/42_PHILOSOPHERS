@@ -6,7 +6,7 @@
 #    By: dreijans <dreijans@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/12/12 21:01:52 by dreijans      #+#    #+#                  #
-#    Updated: 2023/12/22 19:57:46 by dreijans      ########   odam.nl          #
+#    Updated: 2023/12/22 23:33:06 by dreijans      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ OBJDIR		= 	obj
 SRC			= 	main.c		\
 				utils.c		\
 				routine.c	\
+				init.c		\
+				
 			
 ## COLOURS ##
 DONE		:= \033[0m
