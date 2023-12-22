@@ -6,7 +6,7 @@
 #    By: dreijans <dreijans@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/12/12 21:01:52 by dreijans      #+#    #+#                  #
-#    Updated: 2023/12/19 18:35:27 by dreijans      ########   odam.nl          #
+#    Updated: 2023/12/22 19:57:46 by dreijans      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,13 +58,11 @@ flags:
 	@ $(MAKE) fclean
 	@ $(MAKE) DEBUG=1 all
 	@ echo "${GREEN}made with address flags${DONE}"
-	@ ./$(NAME)
 
 thread-flags:
 	@ $(MAKE) fclean
 	@ $(MAKE) DEBUG=1 all
 	@ echo "${GREEN}made with thread flags${DONE}"
-	@ ./$(NAME)
 
 norm:
 	@ norminette

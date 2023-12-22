@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/20 20:27:23 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/22 18:33:22 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ int main(int argc, char **argv)
 				while (j < i)
 				{
 					if (pthread_join(data->philo[j].t_id, NULL) != 0)
+					{
 						perror("Error at joining thread\n");
+						//make cleanup function
+						return (1);
 						j++;
+					}
 				}
 				perror("Error at creating thread\n");
 			}
@@ -46,7 +50,11 @@ int main(int argc, char **argv)
 		while (i < data->philo_count)
 		{
 			if (pthread_join(data->philo[i].t_id, NULL) != 0)
+			{
 				perror("Error at joining thread\n");
+				//make cleanup function
+				return (1);
+			}
 			i++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/20 20:00:42 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/22 20:16:00 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,9 @@ t_data	*init_data_struct(t_data *data, int argc, char **argv)
 		pthread_mutex_init(&data->fork_array[i], NULL);
 		i++;
 	}
+	pthread_mutex_init(&data->printing_mutex, NULL);
+	pthread_mutex_init(&data->monitor_mutex, NULL);
+	data->stop_monitor = false;
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
@@ -159,13 +162,14 @@ void	init_philo(t_data *data)
 	int	i;
 
 	i = 0;
-	data->philo = malloc(sizeof(t_philo) * data->philo_count);
+	data->philo = malloc(sizeof(t_philo) * data->philo_count + 1);
 	if (data->philo == NULL)
 		return ;
+	(&data->philo)[data->philo_count] = NULL;
 	if (i == 0)
 	{
 		data->philo[0].p_id = i;
-		data->philo[0].right_fork = &data->fork_array[data->philo_count];
+		data->philo[0].right_fork = &data->fork_array[data->philo_count - 1];
 		data->philo[0].left_fork = &data->fork_array[0];
 		data->philo[0].times_eaten = 0;//needs to be -1?
 		data->philo[0].time_of_death = 0;//needs to be -1?
@@ -175,16 +179,8 @@ void	init_philo(t_data *data)
 	while (i < data->philo_count)
 	{
 		data->philo[i].p_id = i;
-		if (i % 2 != 0)
-		{
-			data->philo[i].right_fork = &data->fork_array[i];
-			data->philo[i].left_fork = &data->fork_array[i - 1];
-		}
-		else
-		{
-			data->philo[i].left_fork = &data->fork_array[i];
-			data->philo[i].right_fork = &data->fork_array[i - 1];
-		}
+		data->philo[i].left_fork = &data->fork_array[i];
+		data->philo[i].right_fork = &data->fork_array[i - 1];
 		data->philo[i].times_eaten = 0;//needs to be -1?
 		data->philo[i].time_of_death = 0;//needs to be -1?
 		data->philo[i].data = data;

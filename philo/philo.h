@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/20 19:16:29 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/22 20:15:29 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <time.h>
 # include <string.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 typedef struct s_philo t_philo;
 
@@ -40,6 +41,9 @@ typedef struct s_data
 	int					philo_count;
 	pthread_mutex_t		*fork_array;
 	t_philo				*philo;
+	pthread_mutex_t		printing_mutex;
+	pthread_mutex_t		monitor_mutex;
+	bool				stop_monitor;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
@@ -66,6 +70,7 @@ typedef struct s_philo
 	int					time_of_death;
 	t_data				*data;
 }		t_philo;
+
 
 t_data			*init_data_struct(t_data *data, int argc, char **argv);
 void			init_philo(t_data *data);
