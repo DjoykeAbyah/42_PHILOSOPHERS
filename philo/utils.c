@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 20:13:26 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 20:48:22 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_message(t_philo *philo, char *message)
 	
 	pthread_mutex_lock(&philo->data->printing);
 	time = time_stamp(philo);
-	printf("timestamp: %09ld philo nr %i is %s\n", time, philo->p_id, message);
+	printf("%ld philo nr %i is %s\n", time, philo->p_id, message);
 	pthread_mutex_unlock(&philo->data->printing);
 	usleep(500);
 }
@@ -62,6 +62,11 @@ int long	time_stamp(t_philo *philo)
 	return (new_time);
 }
 
+/**
+ * @param philo philo struct from specific thread
+ * @brief checks if monitor boolean is set to true or false
+ * @return true if philo died, false if not
+*/
 bool	stop_boolean_check(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->monitor);
@@ -74,6 +79,12 @@ bool	stop_boolean_check(t_philo *philo)
 	return (false);
 }
 
+/**
+ * @param philo philo struct from specific thread
+ * @brief checks if philo exeeded time to die and 
+ * sets monitor boolean on true.
+ * @return true is philo died, false if not
+*/
 bool	death_check(t_philo *philo)
 {
 	long int time;

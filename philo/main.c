@@ -6,12 +6,17 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 20:13:16 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 20:46:21 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @param data pgrogram data struct
+ * @brief loops infinite through philo's to see if a philo set the
+ * stop_monitor on true or false.
+*/
 void	monitor(t_data *data)
 {
 	int i;
@@ -27,15 +32,35 @@ void	monitor(t_data *data)
 	}
 }
 
+/**
+ * @param data pgrogram data struct
+ * @param last_create int with index of last created thread
+ * @brief loops through threads to join them
+*/
+void	thread_join(t_data *data, int last_create)
+{
+	int i;
+
+	i = 0;
+	while (i < last_create)
+	{
+		if (pthread_join(data->philo[i].t_id, NULL) != 0)
+		{
+			perror("Error at joining thread\n");
+			//make cleanup function
+			return ;
+		}
+		i++;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	t_data			*data;
 	int 			i;
-	int				j;
 
 	data = NULL;
 	i = 0;
-	j = 0;
 	if (argc == 5 || argc == 6)
 	{
 		//check input on numeric only
@@ -45,32 +70,14 @@ int main(int argc, char **argv)
 		{
 			if (pthread_create(&data->philo[i].t_id, NULL, &routine, &data->philo[i]) != 0)
 			{
-				while (j < i)
-				{
-					if (pthread_join(data->philo[j].t_id, NULL) != 0)
-					{
-						perror("Error at joining thread\n");
-						//make cleanup function
-						return (1);
-						j++;
-					}
-				}
+				thread_join(data, i);
 				perror("Error at creating thread\n");
-			}
-			i++;
-		}
-		monitor(data);
-		i = 0;
-		while (i < data->philo_count)
-		{
-			if (pthread_join(data->philo[i].t_id, NULL) != 0)
-			{
-				perror("Error at joining thread\n");
-				//make cleanup function
 				return (1);
 			}
 			i++;
 		}
+		monitor(data);
+		thread_join(data, i);
 	}
 	else
 		printf("please give ./philo nr nr nr nr nr");
