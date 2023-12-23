@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 20:46:21 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 21:22:01 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 */
 void	monitor(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->philo_count)
@@ -36,10 +36,11 @@ void	monitor(t_data *data)
  * @param data pgrogram data struct
  * @param last_create int with index of last created thread
  * @brief loops through threads to join them
+ * @todo make cleanup function adter perror
 */
 void	thread_join(t_data *data, int last_create)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < last_create)
@@ -47,26 +48,31 @@ void	thread_join(t_data *data, int last_create)
 		if (pthread_join(data->philo[i].t_id, NULL) != 0)
 		{
 			perror("Error at joining thread\n");
-			//make cleanup function
 			return ;
 		}
 		i++;
 	}
 }
 
-int main(int argc, char **argv)
+/**
+ * @param argc int argument count
+ * @param argv argument strings
+ * @brief main process
+ * @todo function to check input on numeric values only
+ * while (i < data->philo_count)// i = philo_array??
+*/
+int	main(int argc, char **argv)
 {
 	t_data			*data;
-	int 			i;
+	int				i;
 
 	data = NULL;
 	i = 0;
 	if (argc == 5 || argc == 6)
 	{
-		//check input on numeric only
 		data = init_data_struct(data, argc, argv);
 		init_philo(data);
-		while (i < data->philo_count)// i = philo_array
+		while (i < data->philo_count)
 		{
 			if (pthread_create(&data->philo[i].t_id, NULL, &routine, &data->philo[i]) != 0)
 			{
@@ -82,5 +88,3 @@ int main(int argc, char **argv)
 	else
 		printf("please give ./philo nr nr nr nr nr");
 }
-
-// ./philo 1(number of philo) 2(time_to_die) 3(time_to_eat) 4(time_to_sleep) 5(times_eaten)

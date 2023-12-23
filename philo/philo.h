@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 21:07:49 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 21:22:57 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 /**
  * @param philo_count amount of philo's passed from command line
@@ -86,7 +86,7 @@ void			*ft_memset(void *b, int c, size_t len);
 long int		ft_atoi(const char *str);
 int				ft_iswhitespace(char c);
 int				ft_isdigit(int c);
-int long		get_current_time();
+int long		get_current_time(void);
 int long		time_stamp(t_philo *philo);
 void			print_message(t_philo *philo, char *message);
 bool			death_check(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 20:48:22 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 21:25:20 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 /**
  * @brief get's current time from 1979 until now
 */
-int long	get_current_time()
+int long	get_current_time(void)
 {
-	struct timeval 	current_time;
+	struct timeval	current_time;
 	int long		time_millisec;
 
 	if (gettimeofday(&current_time, NULL) != 0)
 	{
 		perror("Error getting time of day");
-		return (0);	
-	}	
+		return (0);
+	}
 	else
 		time_millisec = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
 	return (time_millisec);
@@ -37,8 +37,8 @@ int long	get_current_time()
 */
 void	print_message(t_philo *philo, char *message)
 {
-	int long time;
-	
+	int long	time;
+
 	pthread_mutex_lock(&philo->data->printing);
 	time = time_stamp(philo);
 	printf("%ld philo nr %i is %s\n", time, philo->p_id, message);
@@ -54,9 +54,9 @@ void	print_message(t_philo *philo, char *message)
 */
 int long	time_stamp(t_philo *philo)
 {
-	long int current_time;
-	long int new_time;
-	
+	long int	current_time;
+	long int	new_time;
+
 	current_time = get_current_time();
 	new_time = current_time - philo->data->start_time;
 	return (new_time);
@@ -87,8 +87,8 @@ bool	stop_boolean_check(t_philo *philo)
 */
 bool	death_check(t_philo *philo)
 {
-	long int time;
-	
+	long int	time;
+
 	pthread_mutex_lock(&philo->data->monitor);
 	time = time_stamp(philo);
 	if (time > philo->data->time_to_die)
@@ -101,5 +101,3 @@ bool	death_check(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->monitor);
 	return (false);
 }
-
-//if trying to change variable, do i use it elsewhere? then mutexlock it.

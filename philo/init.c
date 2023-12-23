@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/22 22:44:32 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 21:11:42 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 21:28:13 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	free_fork_array(t_data *data, int i)
 	free(data->fork_array);
 }
 
-
 /**
  * @param data data struct containing all general data 
  * for the program
@@ -43,7 +42,7 @@ void	free_fork_array(t_data *data, int i)
 */
 void	init_fork_array(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->fork_array = ft_calloc(sizeof(pthread_mutex_t), data->philo_count);
@@ -60,7 +59,7 @@ void	init_fork_array(t_data *data)
 			{
 				pthread_mutex_destroy(&data->fork_array[i]);
 				perror("error with creating mutex, mutex destroyed called");
-				i--;	
+				i--;
 			}
 			free_fork_array(data, i);
 		}
@@ -96,24 +95,19 @@ void	init_data_mutexes(t_data *data)
  * @param data data struct containing all general data 
  * for the program
  * @brief initializing t_philo_data struct
+ * @todo 
+ * data->philo[i].right_fork = &data->fork_array[data->philo_count - 1];//minus one??
 */
 void	init_philo(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	data->philo = ft_calloc(sizeof(t_philo), data->philo_count + 1);
-	if (data->philo == NULL)
-	{
-		perror("error creating philo");
-		return ;
-	}
 	while (i < data->philo_count)
 	{
 		data->philo[i].p_id = i + 1;
 		if (i == 0)
 		{
-			data->philo[i].right_fork = &data->fork_array[data->philo_count - 1];//minus one??
+			data->philo[i].right_fork = &data->fork_array[data->philo_count - 1];
 			data->philo[i].left_fork = &data->fork_array[i];
 		}
 		else
@@ -146,8 +140,8 @@ t_data	*init_data_struct(t_data *data, int argc, char **argv)
 	}
 	data->start_time = get_current_time();
 	data->philo_count = ft_atoi(argv[1]);
-    init_fork_array(data);
-    init_data_mutexes(data);
+	init_fork_array(data);
+	init_data_mutexes(data);
 	data->stop_monitor = false;
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
