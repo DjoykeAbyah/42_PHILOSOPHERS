@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/22 23:36:44 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 18:02:33 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_philo
 }		t_philo;
 
 //init.c
-void			init_data_struct(t_data *data, int argc, char **argv);
+t_data			*init_data_struct(t_data *data, int argc, char **argv);
 void			init_philo(t_data *data);
 void			init_data_mutexes(t_data *data);
 void			init_fork_array(t_data *data);
@@ -86,7 +86,11 @@ static void		*ft_memset(void *b, int c, size_t len);
 long int		ft_atoi(const char *str);
 static	int		ft_iswhitespace(char c);
 static	int		ft_isdigit(int c);
+int long		get_current_time();
+int long		time_stamp(t_philo *philo);
+void			print_message(t_philo *philo, char *message);
 
-// void			*routine(void *philo);
+//routine.c
+void			*routine(void *philo);
 
 #endif

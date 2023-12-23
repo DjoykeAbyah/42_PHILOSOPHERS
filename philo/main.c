@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/22 23:31:53 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 16:50:20 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		//check input on numeric only
-		init_data_struct(data, argc, argv);
+		data = init_data_struct(data, argc, argv);
 		init_philo(data);
 		while (i < data->philo_count)// i = philo_array
 		{

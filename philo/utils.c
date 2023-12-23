@@ -6,117 +6,55 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/22 23:42:01 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 18:10:26 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * @param c int to be checked
- * @brief checks characters for numeric characters
+ * @brief get's current time from 1979 until now
 */
-static	int	ft_isdigit(int c)
+int long	get_current_time()
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	struct timeval 	current_time;
+	int long		time_millisec;
+
+	if (gettimeofday(&current_time, NULL) != 0)
+		perror("Error getting time of day");
+	else
+		time_millisec = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
+	return (time_millisec);
 }
 
 /**
- * @param c character to be checked
- * @brief checks characters for whitespaces
+ * @param philo philo struct from specific thread
+ * @param message string containing message of action
+ * @brief prints message with correct timestamp and philo
 */
-static	int	ft_iswhitespace(char c)
+void	print_message(t_philo *philo, char *message)
 {
-	return (c == ' ' || ((c >= 9 && c <= 13)));
+	int long time;
+	
+	pthread_mutex_lock(&philo->data->printing);
+	time = time_stamp(philo);
+	printf("timestamp: %09ld philo nr %i is %s\n", time, philo->p_id, message);
+	pthread_mutex_unlock(&philo->data->printing);
+	usleep(500);
 }
 
 /**
- * @param str string to be converted to integer
- * @brief converting numeric characters to integers
+ * @param philo philo struct from specific thread
+ * @brief returns correct timestamp by 
+ * extracting start_time from current_time
+ * @return int long new_time
 */
-long int	ft_atoi(const char *str)
+int long	time_stamp(t_philo *philo)
 {
-	long	i;
-	long	sign;
-	long	number;
-
-	number = 0;
-	sign = 1;
-	i = 0;
-	while (ft_iswhitespace(str[i]) && str[i] != '\0')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign = sign * -1;
-		i++;
-	}
-	while (ft_isdigit(str[i]))
-	{
-		number = number * 10 + str[i] -48;
-		i++;
-	}
-	return (number * sign);
+	long int current_time;
+	long int new_time;
+	
+	current_time = get_current_time();
+	new_time = current_time - philo->data->start_time;
+	return (new_time);
 }
-
-/**
- * @param b variable to be converted to unsigned char
- * @param c	integer to be converted to unsigned char
- * @param len lenght of variable to be set
- * @brief setting the memory of x number variables
-*/
-static void *ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	*charb;
-	size_t			i;
-
-	i = 0;
-	charb = b;
-	while (i < len)
-	{
-		*charb = (unsigned char)c;
-		charb++;
-		i++;
-	}
-	return (b);
-}
-
-/**
- * @param s variable to be set to '\0'
- * @param n	lenght of memory needed to be set to '\0'
- * @brief setting the memory of x number variables to '\0'
-*/
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, '\0', n);
-}
-
-/**
- * @param count size of the variable(s) to be malloced
- * @param size amount of the variable(s) to be malloced
- * @brief allocating memory on the heap and seting it to '\0'
-*/
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*aloc_mem;
-
-	aloc_mem = malloc(count * size);
-	if (aloc_mem == NULL)
-	{
-		return (NULL);
-	}
-	ft_bzero(aloc_mem, (count * size));
-	return (aloc_mem);
-}
-
-// int long	get_current_time()
-// {
-// 	int long 	time_millisec;
-//     int long    current_time;
-    
-//     current_time = get_current_time();
-// 	time_millisec = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
-// 	return (time_milliseconds);
-// }

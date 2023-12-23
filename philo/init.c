@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/22 22:44:32 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/22 23:38:16 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 17:12:34 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,16 @@ void	init_fork_array(t_data *data)
 	}
 	while (i < data->philo_count)
 	{
-		pthread_mutex_init(&data->fork_array[i], NULL);
-		if (&data->fork_array[i] == NULL)
+		if (pthread_mutex_init(&data->fork_array[i], NULL) != 0)
+		{
+			while (i >= 0)
+			{
+				pthread_mutex_destroy(&data->fork_array[i]);
+				perror("error with creating mutex, mutex destroyed called");
+				i--;	
+			}
 			free_fork_array(data, i);
+		}
 		i++;
 	}
 }
@@ -64,16 +71,25 @@ void	init_fork_array(t_data *data)
 /**
  * @param data data struct containing all general data 
  * for the program
- * @brief initializing single data struct mutexes, destroys if failed
+ * @brief initializing data struct mutexes, destroys if failed
 */
 void	init_data_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->printing, NULL) != 0)
+	{
 		pthread_mutex_destroy(&data->printing);
+		perror("error with creating mutex, mutex destroyed called");
+	}
 	if (pthread_mutex_init(&data->eating, NULL) != 0)
+	{
 		pthread_mutex_destroy(&data->eating);
+		perror("error with creating mutex, mutex destroyed called");
+	}
 	if (pthread_mutex_init(&data->monitor, NULL) != 0)
+	{
 		pthread_mutex_destroy(&data->monitor);
+		perror("error with creating mutex, mutex destroyed called");
+	}
 }
 
 /**
@@ -94,7 +110,7 @@ void	init_philo(t_data *data)
 	}
 	while (i < data->philo_count)
 	{
-		data->philo[i].p_id = i;
+		data->philo[i].p_id = i + 1;
 		if (i == 0)
 		{
 			data->philo[i].right_fork = &data->fork_array[data->philo_count - 1];
@@ -120,13 +136,13 @@ void	init_philo(t_data *data)
  * @brief initializing data struct and filling mutex array.
  * @todo remove comments, check
 */
-void	init_data_struct(t_data *data, int argc, char **argv)
+t_data	*init_data_struct(t_data *data, int argc, char **argv)
 {
 	data = ft_calloc(sizeof(t_data), 1);
 	if (data == NULL)
 	{
 		perror("calloc went wrong");
-		return ;
+		return (NULL);
 	}
 	data->start_time = get_current_time();
 	data->philo_count = ft_atoi(argv[1]);
@@ -138,4 +154,5 @@ void	init_data_struct(t_data *data, int argc, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->eat_count = ft_atoi(argv[5]);
+	return (data);
 }
