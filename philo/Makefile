@@ -6,7 +6,7 @@
 #    By: dreijans <dreijans@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/12/12 21:01:52 by dreijans      #+#    #+#                  #
-#    Updated: 2023/12/23 18:10:53 by dreijans      ########   odam.nl          #
+#    Updated: 2023/12/23 19:40:21 by dreijans      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,12 +45,12 @@ endif
 all:	$(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
+	$(CC) $(OBJ) $(CFLAGS) -o $(NAME)
 	@ echo "${PURPLE}made!${DONE}"
 
 $(OBJDIR)/%.o: %.c
 	@ mkdir -p $(OBJDIR)
-	$(CC) -c -o $@ $^
+	$(CC) $(CFLAGS) -c -o $@ $^
 		
 run: $(NAME)
 	@ echo "${BLUE}made without flags${DONE}"

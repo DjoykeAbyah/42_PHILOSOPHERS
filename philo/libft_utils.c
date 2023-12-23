@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/23 18:07:40 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 18:07:48 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 19:36:44 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @param c int to be checked
  * @brief checks characters for numeric characters
 */
-static	int	ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -27,7 +27,7 @@ static	int	ft_isdigit(int c)
  * @param c character to be checked
  * @brief checks characters for whitespaces
 */
-static	int	ft_iswhitespace(char c)
+int	ft_iswhitespace(char c)
 {
 	return (c == ' ' || ((c >= 9 && c <= 13)));
 }
@@ -67,7 +67,7 @@ long int	ft_atoi(const char *str)
  * @param len lenght of variable to be set
  * @brief setting the memory of x number variables
 */
-static void *ft_memset(void *b, int c, size_t len)
+void *ft_memset(void *b, int c, size_t len)
 {
 	unsigned char	*charb;
 	size_t			i;

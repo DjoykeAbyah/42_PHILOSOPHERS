@@ -6,12 +6,26 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 16:50:20 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 20:13:16 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	monitor(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->philo_count)
+	{
+		if (death_check(&data->philo[i]) == true)
+			break ;
+		i++;
+		if (i == data->philo_count)
+			i = 0;
+	}
+}
 
 int main(int argc, char **argv)
 {
@@ -45,6 +59,7 @@ int main(int argc, char **argv)
 			}
 			i++;
 		}
+		monitor(data);
 		i = 0;
 		while (i < data->philo_count)
 		{
@@ -60,3 +75,5 @@ int main(int argc, char **argv)
 	else
 		printf("please give ./philo nr nr nr nr nr");
 }
+
+// ./philo 1(number of philo) 2(time_to_die) 3(time_to_eat) 4(time_to_sleep) 5(times_eaten)

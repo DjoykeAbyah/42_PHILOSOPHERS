@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 18:02:33 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 20:24:40 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,19 @@ void			free_fork_array(t_data *data, int i);
 //utils.c
 void			*ft_calloc(size_t count, size_t size);
 void			ft_bzero(void *s, size_t n);
-static void		*ft_memset(void *b, int c, size_t len);
+void			*ft_memset(void *b, int c, size_t len);
 long int		ft_atoi(const char *str);
-static	int		ft_iswhitespace(char c);
-static	int		ft_isdigit(int c);
+int				ft_iswhitespace(char c);
+int				ft_isdigit(int c);
 int long		get_current_time();
 int long		time_stamp(t_philo *philo);
 void			print_message(t_philo *philo, char *message);
+bool			death_check(t_philo *philo);
+bool			stop_boolean_check(t_philo *philo);
 
 //routine.c
 void			*routine(void *philo);
+void			thinking(t_philo *philo);
+void			sleeping(t_philo *philo);
 
 #endif
