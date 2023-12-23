@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 20:24:40 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 21:07:49 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ bool			stop_boolean_check(t_philo *philo);
 void			*routine(void *philo);
 void			thinking(t_philo *philo);
 void			sleeping(t_philo *philo);
+void			eating(t_philo *philo);
 
 #endif

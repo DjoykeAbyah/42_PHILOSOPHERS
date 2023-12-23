@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 20:36:21 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/23 21:14:06 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	*routine(void *philo)
 	{
 		sleeping(philosopher);
 		thinking(philosopher);
+		// eating(philosopher);
 	}
 	return (philosopher);
 }
@@ -53,3 +54,23 @@ void	sleeping(t_philo *philo)
 		usleep(philo->data->time_to_sleep);
 	}
 }
+
+// /**
+//  * @param philo philo struct
+//  * @brief prints eating message if no philo died
+//  * and eats for data->time_to_eat amount
+// */
+// void	eating(t_philo *philo)
+// {
+// 	if (stop_boolean_check(philo) == false)
+// 	{	
+// 		pthread_mutex_lock(philo->left_fork);
+// 		print_message(philo, "picked up left fork");
+// 		pthread_mutex_lock(philo->right_fork);
+// 		print_message(philo, "picked up right fork");
+// 		print_message(philo, "eating");
+// 		pthread_mutex_unlock(philo->right_fork);
+// 		pthread_mutex_unlock(philo->left_fork);
+// 		usleep(philo->data->time_to_eat);
+// 	}
+// }
