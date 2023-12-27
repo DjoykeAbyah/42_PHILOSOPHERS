@@ -6,11 +6,20 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 13:40:30 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/27 18:36:36 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void 	sleepy(int time)
+{
+	int long current_time;
+	
+	current_time = get_current_time();
+	while ((get_current_time() - current_time) < time)
+		usleep(100);
+}
 
 /**
  * @param philo void * to eventually philo struct
@@ -22,13 +31,15 @@ void	*routine(void *philo)
 	t_philo		*philosopher;
 
 	philosopher = (t_philo *)philo;
+	if (philosopher->p_id % 2)
+		usleep(500);
 	while (stop_boolean_check(philosopher) == false)
 	{
+		eating(philosopher);
 		sleeping(philosopher);
 		thinking(philosopher);
-		eating(philosopher);
 	}
-	return (philosopher);
+	return (NULL);
 }
 
 /**
@@ -38,7 +49,7 @@ void	*routine(void *philo)
 void	thinking(t_philo *philo)
 {
 	if (stop_boolean_check(philo) == false)
-		print_message(philo, "thinking");
+		print_message(philo, "is thinking");
 }
 
 /**
@@ -50,8 +61,8 @@ void	sleeping(t_philo *philo)
 {
 	if (stop_boolean_check(philo) == false)
 	{
-		print_message(philo, "sleeping");
-		usleep(philo->data->time_to_sleep);
+		print_message(philo, "is sleeping");
+		sleepy(philo->data->time_to_sleep);
 	}
 }
 
@@ -65,12 +76,14 @@ void	eating(t_philo *philo)
 	if (stop_boolean_check(philo) == false)
 	{	
 		pthread_mutex_lock(philo->left_fork);
-		print_message(philo, "picked up left fork");
 		pthread_mutex_lock(philo->right_fork);
-		print_message(philo, "picked up right fork");
-		print_message(philo, "eating");
+		print_message(philo, "has taken a fork");
+		print_message(philo, "is eating");
+		pthread_mutex_lock(&philo->data->eating);
+		philo->last_eat = get_current_time();
+		pthread_mutex_unlock(&philo->data->eating);
+		sleepy(philo->data->time_to_eat);
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
-		usleep(philo->data->time_to_eat);
 	}
 }

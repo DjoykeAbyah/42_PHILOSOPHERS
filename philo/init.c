@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/22 22:44:32 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 13:08:53 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/27 18:06:07 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,9 @@ void	init_philo(t_data *data)
 	while (i < data->philo_count)
 	{
 		data->philo[i].p_id = i + 1;
-		if (i == 0)
-		{
-			data->philo[i].right_fork = &data->fork_array[data->philo_count - 1];
-			data->philo[i].left_fork = &data->fork_array[i];
-		}
-		else
-		{
-			data->philo[i].left_fork = &data->fork_array[i];
-			data->philo[i].right_fork = &data->fork_array[i - 1];
-		}
+		data->philo[i].right_fork = &data->fork_array[i];
+		data->philo[i].left_fork = &data->fork_array[(i + 1) % data->philo_count];
+		data->philo[i].last_eat = get_current_time();
 		data->philo[i].times_eaten = 0;
 		data->philo[i].time_of_death = 0;
 		data->philo[i].data = data;

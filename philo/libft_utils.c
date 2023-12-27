@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/23 18:07:40 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 13:51:38 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/27 15:12:52 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	*ft_calloc(size_t count, size_t size)
  * @return returns 0 if strings are identical, returns non 0
  * if not identical
 */
-int	ft_strncmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
 
@@ -127,9 +127,7 @@ int	ft_strncmp(const char *s1, const char *s2)
 	while (s1[i] != '\0' || s2[i] != '\0')
 	{
 		if (s1[i] != s2[i])
-		{
 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		}
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 13:55:49 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/27 18:30:18 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,13 @@ void	print_message(t_philo *philo, char *message)
 	int long	time;
 	int 		i;
 
+	i = 0;
 	pthread_mutex_lock(&philo->data->printing);
 	time = time_stamp(philo);
-	// if (ft_strncmp(message, "has died"))
-	// {
-	// 	printf("%ld philo nr %i is %s\n", time, philo->p_id, message);
-	// 	while (i <= philo->data->philo_count)
-	// 		pthread_detach(philo->t_id);
-	// }
-	printf("%ld philo nr %i is %s\n", time, philo->p_id, message);
+	if (stop_boolean_check(philo) == true && ft_strcmp(message , "has died") == 0)
+		printf("%ld %i %s\n", time, philo->p_id, message);
+	else
+		printf("%ld %i %s\n", time, philo->p_id, message);
 	pthread_mutex_unlock(&philo->data->printing);
 	usleep(500);
 }
@@ -96,15 +94,17 @@ bool	death_check(t_philo *philo)
 {
 	long int	time;
 
-	pthread_mutex_lock(&philo->data->monitor);
-	time = time_stamp(philo);
+	pthread_mutex_lock(&philo->data->eating);
+	time = get_current_time() - philo->last_eat;
 	if (time > philo->data->time_to_die)
 	{
+		pthread_mutex_unlock(&philo->data->eating);
+		pthread_mutex_lock(&philo->data->monitor);
 		philo->data->stop_monitor = true;
 		print_message(philo, "has died");
 		pthread_mutex_unlock(&philo->data->monitor);
 		return (true);
 	}
-	pthread_mutex_unlock(&philo->data->monitor);
+	pthread_mutex_unlock(&philo->data->eating);
 	return (false);
 }

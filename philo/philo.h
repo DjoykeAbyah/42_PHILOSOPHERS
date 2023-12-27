@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 21:22:57 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/27 18:38:16 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	pthread_mutex_t		printing;
 	pthread_mutex_t		eating;
 	pthread_mutex_t		monitor;
+	// pthread_t			watch;
 	long int			start_time;
 }			t_data;
 
@@ -67,6 +68,7 @@ typedef struct s_philo
 	int					p_id;
 	int					times_eaten;
 	int					time_of_death;
+	long int 			last_eat;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	t_data				*data;
@@ -91,6 +93,7 @@ int long		time_stamp(t_philo *philo);
 void			print_message(t_philo *philo, char *message);
 bool			death_check(t_philo *philo);
 bool			stop_boolean_check(t_philo *philo);
+int				ft_strcmp(const char *s1, const char *s2);
 
 //routine.c
 void			*routine(void *philo);
