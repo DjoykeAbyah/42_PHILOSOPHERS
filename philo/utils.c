@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 21:25:20 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/27 13:55:49 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,16 @@ int long	get_current_time(void)
 void	print_message(t_philo *philo, char *message)
 {
 	int long	time;
+	int 		i;
 
 	pthread_mutex_lock(&philo->data->printing);
 	time = time_stamp(philo);
+	// if (ft_strncmp(message, "has died"))
+	// {
+	// 	printf("%ld philo nr %i is %s\n", time, philo->p_id, message);
+	// 	while (i <= philo->data->philo_count)
+	// 		pthread_detach(philo->t_id);
+	// }
 	printf("%ld philo nr %i is %s\n", time, philo->p_id, message);
 	pthread_mutex_unlock(&philo->data->printing);
 	usleep(500);

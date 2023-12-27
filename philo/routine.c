@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 13:13:27 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/27 13:40:30 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*routine(void *philo)
 	t_philo		*philosopher;
 
 	philosopher = (t_philo *)philo;
-	while (!stop_boolean_check(philosopher))
+	while (stop_boolean_check(philosopher) == false)
 	{
 		sleeping(philosopher);
 		thinking(philosopher);
