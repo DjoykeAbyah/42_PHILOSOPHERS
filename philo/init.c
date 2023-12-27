@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/22 22:44:32 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/23 21:28:13 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/27 13:08:53 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,12 @@ void	init_data_mutexes(t_data *data)
 */
 void	init_philo(t_data *data)
 {
-	int	i;
+	int		i;
 
+	i = 0;
+	data->philo = ft_calloc(sizeof(t_philo), data->philo_count);
+	if (data->philo == NULL)
+		perror("error malloc t_philo struct");
 	while (i < data->philo_count)
 	{
 		data->philo[i].p_id = i + 1;
