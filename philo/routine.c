@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 20:57:38 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 21:46:45 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void 	sleepy(t_philo *philo, int time)
  * @param philo void * to eventually philo struct
  * @brief loops through routine actions untill a philo died
  * @return philo struct
+ * @todo doesnt work without eat count anymore needs if statement to 
+ * check if there is a eat count and if so it needs to check
 */
 void	*routine(void *philosopher)
 {
@@ -33,7 +35,8 @@ void	*routine(void *philosopher)
 	philo = (t_philo *)philosopher;
 	if (philo->p_id % 2)
 		usleep(1000);
-	while (stop_boolean_check(philo) == false && (philo->times_eaten < philo->data->eat_count))
+	// while (stop_boolean_check(philo) == false)
+	while (stop_boolean_check(philo) == false && eat_count_check(philo) == false)
 	{
 		eating(philo);
 		sleeping(philo);

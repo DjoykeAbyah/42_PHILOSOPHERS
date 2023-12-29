@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 19:42:27 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 21:48:48 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,22 @@ bool	death_check(t_philo *philo)
 		return (true);
 	}
 	pthread_mutex_unlock(&philo->data->eating);
+	return (false);
+}
+
+/**
+ * @param philo philo struct from specific thread
+ * @brief checks if there is a eat count and if times eaten
+ * is equal to the eat count
+ * @return true if times eaten equal to eat count, 
+ * false if no eat count or not equal to times eaten
+*/
+bool	eat_count_check(t_philo *philo)
+{
+	if (philo->data->has_eat_count == true)
+	{
+		if (philo->times_eaten == philo->data->eat_count)
+		return (true);
+	}
 	return (false);
 }

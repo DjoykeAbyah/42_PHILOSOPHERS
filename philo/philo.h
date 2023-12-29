@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 20:57:17 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 21:43:28 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data
 	int					time_to_sleep;
 	int					eat_count;
 	bool				stop_monitor;
+	bool				has_eat_count;
 	t_philo				*philo;
 	pthread_mutex_t		*fork_array;
 	pthread_mutex_t		printing;
@@ -93,6 +94,7 @@ void			print_message(t_philo *philo, char *message);
 bool			death_check(t_philo *philo);
 bool			stop_boolean_check(t_philo *philo);
 int				ft_strcmp(const char *s1, const char *s2);
+bool			eat_count_check(t_philo *philo);
 
 //routine.c
 void			*routine(void *philosopher);

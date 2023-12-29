@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/22 22:44:32 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 18:36:35 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 21:47:11 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,9 @@ t_data	*init_data_struct(t_data *data, int argc, char **argv)
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
+	{
 		data->eat_count = ft_atoi(argv[5]);
+		data->has_eat_count = true;
+	}
 	return (data);
 }
