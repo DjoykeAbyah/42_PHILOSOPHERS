@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 21:48:48 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 22:53:48 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int long	get_current_time(void)
 void	print_message(t_philo *philo, char *message)
 {
 	int long	time;
-	int 		i;
+	int			i;
 
 	i = 0;
 	pthread_mutex_lock(&philo->data->printing);
@@ -118,7 +118,16 @@ bool	eat_count_check(t_philo *philo)
 	if (philo->data->has_eat_count == true)
 	{
 		if (philo->times_eaten == philo->data->eat_count)
-		return (true);
+			return (true);
 	}
 	return (false);
+}
+
+void	error_message(void)
+{
+	printf("please give as input:\n");
+	printf("./philo + in digits\n1) number_of_philo\n2) time_to_die\n");
+	printf("3) time_to_eat\n4) time_to_sleep\n");
+	printf("optional is:\n5) times_eaten\n");
+	printf("example: ./philo 7 2000 400 100 5");
 }

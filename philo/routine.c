@@ -6,16 +6,16 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 22:29:50 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 22:32:59 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void 	sleepy(t_philo *philo, int time)
+void	sleepy(t_philo *philo, int time)
 {
-	int long current_time;
-	
+	int long	current_time;
+
 	current_time = get_current_time();
 	while ((get_current_time() - current_time) < time && stop_boolean_check(philo) == false)
 		usleep(100);
@@ -80,7 +80,7 @@ void	eating(t_philo *philo)
 	{
 		pthread_mutex_unlock(philo->left_fork);
 		philo->data->stop_monitor = true;
-		return;
+		return ;
 	}
 	pthread_mutex_lock(philo->right_fork);
 	print_message(philo, "has taken a right fork");

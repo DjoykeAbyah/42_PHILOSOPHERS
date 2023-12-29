@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 22:02:59 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 22:53:32 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	thread_join(t_data *data, int last_create)
 */
 bool	input_check(char **argv)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (argv[i] != NULL)
@@ -78,6 +78,21 @@ bool	input_check(char **argv)
 		i++;
 	}
 	return (true);
+}
+
+int	thread_create(t_data *data, int i)
+{
+	while (i < data->philo_count)
+	{
+		if (pthread_create(&data->philo[i].t_id, NULL, &routine, &data->philo[i]) != 0)
+		{
+			thread_join(data, i);
+			perror("Error at creating thread\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
 /**
@@ -95,24 +110,14 @@ int	main(int argc, char **argv)
 	i = 0;
 	if (argc == 5 || argc == 6)
 	{
-		//create thread watch
 		if (input_check(argv) == false)
 			return (1);
 		data = init_data_struct(data, argc, argv);
 		init_philo(data);
-		while (i < data->philo_count)
-		{
-			if (pthread_create(&data->philo[i].t_id, NULL, &routine, &data->philo[i]) != 0)
-			{
-				thread_join(data, i);
-				perror("Error at creating thread\n");
-				return (1);
-			}
-			i++;
-		}
+		thread_create(data, i);
 		monitor(data);
 		thread_join(data, i);
 	}
 	else
-		printf("please give ./philo nr nr nr nr nr");
+		error_message();
 }

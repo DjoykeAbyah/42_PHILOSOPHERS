@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 21:43:28 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 22:53:09 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <string.h>
 # include <sys/time.h>
 # include <stdbool.h>
+
+# define ERROR_MESSAGE ": positive numeric argument 255 or below required\n"
 
 typedef struct s_philo	t_philo;
 
@@ -68,7 +70,7 @@ typedef struct s_philo
 	int					p_id;
 	int					times_eaten;
 	int					time_of_death;
-	long int 			last_eat;
+	long int			last_eat;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	t_data				*data;
@@ -95,6 +97,7 @@ bool			death_check(t_philo *philo);
 bool			stop_boolean_check(t_philo *philo);
 int				ft_strcmp(const char *s1, const char *s2);
 bool			eat_count_check(t_philo *philo);
+void			error_message(void);
 
 //routine.c
 void			*routine(void *philosopher);

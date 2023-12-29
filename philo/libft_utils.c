@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/23 18:07:40 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 18:34:49 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 22:33:15 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	*ft_calloc(size_t count, size_t size)
 	ft_bzero(aloc_mem, (count * size));
 	return (aloc_mem);
 }
-
 
 /**
  * @param s1 string to be compared
