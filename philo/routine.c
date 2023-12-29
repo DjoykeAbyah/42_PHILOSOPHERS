@@ -6,18 +6,18 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 17:45:11 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 19:32:30 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void 	sleepy(int time)
+void 	sleepy(t_philo *philo, int time)
 {
 	int long current_time;
 	
 	current_time = get_current_time();
-	while ((get_current_time() - current_time) < time)
+	while ((get_current_time() - current_time) < time && stop_boolean_check(philo) == false)
 		usleep(100);
 }
 
@@ -32,7 +32,7 @@ void	*routine(void *philo)
 
 	philosopher = (t_philo *)philo;
 	if (philosopher->p_id % 2)
-		usleep(500);
+		usleep(1000);
 	while (stop_boolean_check(philosopher) == false)
 	{
 		eating(philosopher);
@@ -48,8 +48,7 @@ void	*routine(void *philo)
 */
 void	thinking(t_philo *philo)
 {
-	if (stop_boolean_check(philo) == false)
-		print_message(philo, "is thinking");
+	print_message(philo, "is thinking");
 }
 
 /**
@@ -59,11 +58,8 @@ void	thinking(t_philo *philo)
 */
 void	sleeping(t_philo *philo)
 {
-	if (stop_boolean_check(philo) == false)
-	{
-		print_message(philo, "is sleeping");
-		sleepy(philo->data->time_to_sleep);
-	}
+	print_message(philo, "is sleeping");
+	sleepy(philo, philo->data->time_to_sleep);
 }
 
 /**
@@ -73,17 +69,15 @@ void	sleeping(t_philo *philo)
 */
 void	eating(t_philo *philo)
 {
-	if (stop_boolean_check(philo) == false)
-	{	
-		pthread_mutex_lock(philo->left_fork);
-		pthread_mutex_lock(philo->right_fork);
-		print_message(philo, "has taken a fork");
-		print_message(philo, "is eating");
-		pthread_mutex_lock(&philo->data->eating);
-		philo->last_eat = get_current_time();
-		pthread_mutex_unlock(&philo->data->eating);
-		sleepy(philo->data->time_to_eat);
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-	}
+	pthread_mutex_lock(philo->left_fork);
+	print_message(philo, "has taken a left fork");
+	pthread_mutex_lock(philo->right_fork);
+	print_message(philo, "has taken a right fork");
+	print_message(philo, "is eating");
+	pthread_mutex_lock(&philo->data->eating);
+	philo->last_eat = get_current_time();
+	pthread_mutex_unlock(&philo->data->eating);
+	sleepy(philo, philo->data->time_to_eat);
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 }

@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 18:43:45 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 19:44:54 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  * @param data pgrogram data struct
  * @brief loops infinite through philo's to see if a philo set the
  * stop_monitor on true or false.
+ * @todo keep the usleep for speed or not?
 */
 void	monitor(t_data *data)
 {
@@ -28,7 +29,10 @@ void	monitor(t_data *data)
 			break ;
 		i++;
 		if (i == data->philo_count)
+		{
 			i = 0;
+			usleep(100);
+		}
 	}
 }
 

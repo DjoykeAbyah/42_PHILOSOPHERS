@@ -6,7 +6,7 @@
 #    By: dreijans <dreijans@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/12/12 21:01:52 by dreijans      #+#    #+#                  #
-#    Updated: 2023/12/23 19:40:21 by dreijans      ########   odam.nl          #
+#    Updated: 2023/12/29 19:34:02 by dreijans      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,10 +51,6 @@ $(NAME): $(OBJ)
 $(OBJDIR)/%.o: %.c
 	@ mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -c -o $@ $^
-		
-run: $(NAME)
-	@ echo "${BLUE}made without flags${DONE}"
-	@ ./$(NAME) 
 
 flags:
 	@ $(MAKE) fclean
