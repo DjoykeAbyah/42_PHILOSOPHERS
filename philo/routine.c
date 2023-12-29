@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 21:46:45 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 22:20:15 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ void	*routine(void *philosopher)
 	philo = (t_philo *)philosopher;
 	if (philo->p_id % 2)
 		usleep(1000);
-	// while (stop_boolean_check(philo) == false)
-	while (stop_boolean_check(philo) == false && eat_count_check(philo) == false)
+	while (stop_boolean_check(philo) == false)
 	{
+		if (eat_count_check(philo) == true)//not working as expected needs to be in a global variable?
+			return (NULL);
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
@@ -74,6 +75,12 @@ void	eating(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	print_message(philo, "has taken a left fork");
+	if (philo->data->philo_count == 1)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		philo->data->stop_monitor = true;
+		return;
+	}
 	pthread_mutex_lock(philo->right_fork);
 	print_message(philo, "has taken a right fork");
 	print_message(philo, "is eating");

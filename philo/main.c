@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 19:44:54 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 22:02:59 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	monitor(t_data *data)
 	i = 0;
 	while (i < data->philo_count)
 	{
-		if (death_check(&data->philo[i]) == true)
+		if (death_check(&data->philo[i]) == true || eat_count_check(data->philo) == true)
 			break ;
 		i++;
 		if (i == data->philo_count)
