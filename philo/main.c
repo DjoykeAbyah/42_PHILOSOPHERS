@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 18:36:55 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 18:43:45 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,32 @@ void	thread_join(t_data *data, int last_create)
 }
 
 /**
+ * @param argv argument strings
+ * @brief checks if arguments are digits
+ * @todo replace perror?
+*/
+bool	input_check(char **argv)
+{
+	int i;
+
+	i = 1;
+	while (argv[i] != NULL)
+	{
+		if (ft_atoi(argv[i]) == 0)
+		{
+			perror("please give numeric input");
+			return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
+/**
  * @param argc int argument count
  * @param argv argument strings
  * @brief main process
- * @todo function to check input on numeric values only
- * while (i < data->philo_count)// i = philo_array??
+ * @todo norm proof
 */
 int	main(int argc, char **argv)
 {
@@ -71,6 +92,8 @@ int	main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		//create thread watch
+		if (input_check(argv) == false)
+			return (1);
 		data = init_data_struct(data, argc, argv);
 		init_philo(data);
 		while (i < data->philo_count)

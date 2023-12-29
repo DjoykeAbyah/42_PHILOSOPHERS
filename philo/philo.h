@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:01:11 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 18:38:16 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 18:44:47 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_data
 	pthread_mutex_t		printing;
 	pthread_mutex_t		eating;
 	pthread_mutex_t		monitor;
-	// pthread_t			watch;
 	long int			start_time;
 }			t_data;
 

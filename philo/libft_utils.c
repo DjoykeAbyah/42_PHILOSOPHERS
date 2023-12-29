@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/23 18:07:40 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 15:12:52 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 18:34:49 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /**
  * @param c int to be checked
  * @brief checks characters for numeric characters
+ * @return 1 if not digit, 0 if digit
 */
 int	ft_isdigit(int c)
 {

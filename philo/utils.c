@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/27 18:30:18 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/29 18:09:21 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_message(t_philo *philo, char *message)
 	i = 0;
 	pthread_mutex_lock(&philo->data->printing);
 	time = time_stamp(philo);
-	if (stop_boolean_check(philo) == true && ft_strcmp(message , "has died") == 0)
+	if ((philo->data->stop_monitor == true) && (ft_strcmp(message, "has died") == 0))
 		printf("%ld %i %s\n", time, philo->p_id, message);
 	else
 		printf("%ld %i %s\n", time, philo->p_id, message);
