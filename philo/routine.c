@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/19 18:08:55 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/30 19:39:50 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/30 20:04:00 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	sleeping(t_philo *philo)
 static void	eating(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
-	print_message(philo, "has taken a left fork");
+	print_message(philo, "has taken a fork");
 	if (philo->data->philo_count == 1)
 	{
 		pthread_mutex_unlock(philo->left_fork);
@@ -64,7 +64,7 @@ static void	eating(t_philo *philo)
 		return ;
 	}
 	pthread_mutex_lock(philo->right_fork);
-	print_message(philo, "has taken a right fork");
+	print_message(philo, "has taken a fork");
 	print_message(philo, "is eating");
 	pthread_mutex_lock(&philo->data->eating);
 	philo->last_eat = get_current_time();

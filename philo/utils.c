@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/13 17:46:34 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/30 19:39:17 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/30 20:04:37 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int long	get_current_time(void)
 
 	if (gettimeofday(&current_time, NULL) != 0)
 	{
-		perror("Error getting time of day");
+		write(2, "Error getting time of day\n", 27);
 		return (0);
 	}
 	else
@@ -83,7 +83,7 @@ bool	death_check(t_philo *philo)
 		pthread_mutex_lock(&philo->data->monitor);
 		philo->data->stop_monitor = true;
 		pthread_mutex_unlock(&philo->data->monitor);
-		print_message(philo, "has died");
+		print_message(philo, "died");
 		return (true);
 	}
 	pthread_mutex_unlock(&philo->data->eating);

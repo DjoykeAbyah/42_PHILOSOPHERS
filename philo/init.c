@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/22 22:44:32 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/30 19:39:44 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/30 20:00:36 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	free_fork_array(t_data *data, int i)
  * for the program
  * @brief allocating memory and filling mutex array.
 */
-static void	init_fork_array(t_data *data)
+static bool	init_fork_array(t_data *data)
 {
 	int	i;
 
@@ -41,8 +41,8 @@ static void	init_fork_array(t_data *data)
 	data->fork_array = ft_calloc(sizeof(pthread_mutex_t), data->philo_count);
 	if (data->fork_array == NULL)
 	{
-		perror("error creating fork array");
-		return ;
+		write(2, "error creating fork array\n", 27);
+		return (false);
 	}
 	while (i < data->philo_count)
 	{
@@ -51,13 +51,15 @@ static void	init_fork_array(t_data *data)
 			while (i >= 0)
 			{
 				pthread_mutex_destroy(&data->fork_array[i]);
-				perror("error with creating mutex, mutex destroyed called");
+				write(2, "error creating mutex, mutex destroyed called\n", 46);
 				i--;
 			}
 			free_fork_array(data, i);
+			return (false);
 		}
 		i++;
 	}
+	return (true);
 }
 
 /**
@@ -65,23 +67,27 @@ static void	init_fork_array(t_data *data)
  * for the program
  * @brief initializing data struct mutexes, destroys if failed
 */
-static void	init_data_mutexes(t_data *data)
+static bool	init_data_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->printing, NULL) != 0)
 	{
-		pthread_mutex_destroy(&data->printing);
-		perror("error with creating mutex, mutex destroyed called");
+		write(2, "error creating mutex, mutex destroyed called\n", 46);
+		return (false);
 	}
 	if (pthread_mutex_init(&data->eating, NULL) != 0)
 	{
-		pthread_mutex_destroy(&data->eating);
-		perror("error with creating mutex, mutex destroyed called");
+		pthread_mutex_destroy(&data->printing);
+		write(2, "error creating mutex, mutex destroyed called\n", 46);
+		return (false);
 	}
 	if (pthread_mutex_init(&data->monitor, NULL) != 0)
 	{
-		pthread_mutex_destroy(&data->monitor);
-		perror("error with creating mutex, mutex destroyed called");
+		pthread_mutex_destroy(&data->eating);
+		pthread_mutex_destroy(&data->printing);
+		write(2, "error creating mutex, mutex destroyed called\n", 46);
+		return (false);
 	}
+	return (true);
 }
 
 /**
@@ -89,7 +95,7 @@ static void	init_data_mutexes(t_data *data)
  * for the program
  * @brief initializing t_philo_data struct
 */
-void	init_philo(t_data *data)
+bool	init_philo(t_data *data)
 {
 	int		i;
 
@@ -97,8 +103,9 @@ void	init_philo(t_data *data)
 	data->philo = ft_calloc(sizeof(t_philo), data->philo_count);
 	if (data->philo == NULL)
 	{
-		perror("error malloc t_philo struct");
-		return ;
+		write(2, "error malloc t_philo struct\n", 29);
+		free_all(data);
+		return (false);
 	}
 	while (i < data->philo_count)
 	{
@@ -111,6 +118,7 @@ void	init_philo(t_data *data)
 		data->philo[i].data = data;
 		i++;
 	}
+	return (true);
 }
 
 /**
@@ -125,13 +133,15 @@ t_data	*init_data_struct(t_data *data, int argc, char **argv)
 	data = ft_calloc(sizeof(t_data), 1);
 	if (data == NULL)
 	{
-		perror("calloc went wrong");
+		write(2, "calloc fail\n", 13);
 		return (NULL);
 	}
 	data->start_time = get_current_time();
 	data->philo_count = ft_atoi(argv[1]);
-	init_fork_array(data);
-	init_data_mutexes(data);
+	if (init_fork_array(data) == false)
+		return (free(data), NULL);
+	if (init_data_mutexes(data) == false)
+		return (free_init(data), NULL);
 	data->stop_monitor = false;
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);

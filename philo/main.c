@@ -6,7 +6,7 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/12 21:00:27 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/30 19:39:56 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/30 20:01:21 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	thread_join(t_data *data, int last_create)
 	{
 		if (pthread_join(data->philo[i].t_id, NULL) != 0)
 		{
-			perror("Error at joining thread\n");
+			write(2, "Error joining thread\n", 22);
 			return ;
 		}
 		i++;
@@ -93,7 +93,7 @@ static bool	thread_create(t_data *data, int i)
 		{
 			thread_join(data, i);
 			free_all(data);
-			perror("Error at creating thread\n");
+			write(2, "Error creating thread\n", 23);
 			return (false);
 		}
 		i++;
@@ -118,7 +118,10 @@ int	main(int argc, char **argv)
 		if (input_check(argv) == false)
 			return (1);
 		data = init_data_struct(data, argc, argv);
-		init_philo(data);
+		if (data == NULL)
+			return (1);
+		if (init_philo(data) == false)
+			return (1);
 		if (thread_create(data, i) == false)
 			return (1);
 		monitor(data);
