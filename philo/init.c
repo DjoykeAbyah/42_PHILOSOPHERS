@@ -6,30 +6,24 @@
 /*   By: dreijans <dreijans@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/22 22:44:32 by dreijans      #+#    #+#                 */
-/*   Updated: 2023/12/29 21:47:11 by dreijans      ########   odam.nl         */
+/*   Updated: 2023/12/30 19:39:44 by dreijans      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * @param data data struct containing all general data 
+ * @param data struct containing all general data 
  * for the program
  * @param i index position at moment of init fail
  * @brief allocating memory and filling mutex array.
- * @todo use calloc?
 */
-void	free_fork_array(t_data *data, int i)
+static void	free_fork_array(t_data *data, int i)
 {
-	while (i >= 0)
+	while (i < data->philo_count)
 	{
 		pthread_mutex_destroy(&data->fork_array[i]);
 		i--;
-	}
-	while (&data->fork_array[i])
-	{
-		free(&data->fork_array[i]);
-		i++;
 	}
 	free(data->fork_array);
 }
@@ -38,9 +32,8 @@ void	free_fork_array(t_data *data, int i)
  * @param data data struct containing all general data 
  * for the program
  * @brief allocating memory and filling mutex array.
- * @todo what return?
 */
-void	init_fork_array(t_data *data)
+static void	init_fork_array(t_data *data)
 {
 	int	i;
 
@@ -72,7 +65,7 @@ void	init_fork_array(t_data *data)
  * for the program
  * @brief initializing data struct mutexes, destroys if failed
 */
-void	init_data_mutexes(t_data *data)
+static void	init_data_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->printing, NULL) != 0)
 	{
@@ -95,8 +88,6 @@ void	init_data_mutexes(t_data *data)
  * @param data data struct containing all general data 
  * for the program
  * @brief initializing t_philo_data struct
- * @todo 
- * data->philo[i].right_fork = &data->fork_array[data->philo_count - 1];//minus one??
 */
 void	init_philo(t_data *data)
 {
@@ -105,15 +96,18 @@ void	init_philo(t_data *data)
 	i = 0;
 	data->philo = ft_calloc(sizeof(t_philo), data->philo_count);
 	if (data->philo == NULL)
+	{
 		perror("error malloc t_philo struct");
+		return ;
+	}
 	while (i < data->philo_count)
 	{
 		data->philo[i].p_id = i + 1;
 		data->philo[i].right_fork = &data->fork_array[i];
-		data->philo[i].left_fork = &data->fork_array[(i + 1) % data->philo_count];
+		data->philo[i].left_fork = \
+			&data->fork_array[(i + 1) % data->philo_count];
 		data->philo[i].last_eat = get_current_time();
 		data->philo[i].times_eaten = 0;
-		data->philo[i].time_of_death = 0;
 		data->philo[i].data = data;
 		i++;
 	}
@@ -125,7 +119,6 @@ void	init_philo(t_data *data)
  * @param argc command line argument count
  * @param argv command line argument strings
  * @brief initializing data struct and filling mutex array.
- * @todo remove comments, check
 */
 t_data	*init_data_struct(t_data *data, int argc, char **argv)
 {

@@ -6,15 +6,13 @@
 #    By: dreijans <dreijans@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/12/12 21:01:52 by dreijans      #+#    #+#                  #
-#    Updated: 2023/12/29 19:34:02 by dreijans      ########   odam.nl          #
+#    Updated: 2023/12/30 19:40:32 by dreijans      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 CC			= 	cc
 CFLAGS		= 	-Wall -Werror -Wextra
-LDFLAGS		= 	-g -fsanitize=address
-THFLAGS		=	-g -fsanitize=thread
 OBJ			= 	$(addprefix $(OBJDIR)/, $(notdir $(SRC:.c=.o)))
 OBJDIR		= 	obj
 SRC			= 	main.c			\
@@ -22,6 +20,7 @@ SRC			= 	main.c			\
 				routine.c		\
 				init.c			\
 				libft_utils.c	\
+				error.c			\
 					
 ## COLOURS ##
 DONE		:= \033[0m
@@ -34,14 +33,6 @@ CYAN		:= \033[1;96m
 WHITE		:= \033[1;97m
 BLACK		:= \033[1;90m
 
-ifeq ($(DEBUG), 1)
-    CFLAGS += $(LDFLAGS)
-endif
-
-ifeq ($(DEBUG), 2)
-    CFLAGS += $(THFLAGS)
-endif
-
 all:	$(NAME)
 
 $(NAME): $(OBJ)
@@ -51,16 +42,6 @@ $(NAME): $(OBJ)
 $(OBJDIR)/%.o: %.c
 	@ mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -c -o $@ $^
-
-flags:
-	@ $(MAKE) fclean
-	@ $(MAKE) DEBUG=1 all
-	@ echo "${GREEN}made with address flags${DONE}"
-
-thread-flags:
-	@ $(MAKE) fclean
-	@ $(MAKE) DEBUG=1 all
-	@ echo "${GREEN}made with thread flags${DONE}"
 
 norm:
 	@ norminette
