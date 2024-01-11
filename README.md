@@ -15,20 +15,19 @@ In this assignment, philosophers gather around a round table with a central bowl
 
 ## Global Rules
 
-- Global variables are forbidden.
 - Program arguments: `number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]`.
 - Each philosopher is numbered from 1 to `number_of_philosophers`.
 - Philosopher 1 sits next to philosopher `number_of_philosophers`, and any other philosopher N sits between philosopher N - 1 and philosopher N + 1.
 
 ### About Program Logs:
-- State changes for philosophers must be formatted with timestamps.
-- A displayed state message should not be mixed up with another message.
+- State changes for philosophers are formatted with timestamps.
+- A displayed state message must not be mixed up with another message.
 - Messages announcing a philosopher's death should be displayed within 10 ms after the actual death.
-- Avoid data races in the program.
+- Ofcourse data races in the program are avoided.
 
 ### Specific Rules:
 - Each philosopher is a thread.
 - One fork between each pair of philosophers.
-- Use mutexes to protect the state of forks to prevent duplication.
+- Mutexes are used to protect the state of forks to prevent duplication.
 
 ```
